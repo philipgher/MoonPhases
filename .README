@@ -1,0 +1,15 @@
+# MoonPhases
+
+React Native app showing you the moon phase.
+
+# Setup
+
+Install the expo cli globally: `npm i -g expo-cli`
+
+Install dependencies: `yarn`
+
+Start the main app: `yarn start` || `expo start`
+
+
+Expo allows you to develop with a "native" (through the Expo app) preview on Android and iOS as well as a preview in web mode. On macOS you're able to view on all these platforms. For Android you need Android Studio or and Android device (USB or LAN connected).
+
