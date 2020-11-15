@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { DateTime } from 'luxon';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 const HeaderBar = () => {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.center}>
-				{'Moon phases'}
+				{DateTime.local().toLocaleString({
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+				})}
 			</Text>
 			<Pressable style={styles.topRight}>
 				<Text>
-					{'Settings'}
+					{'Calendar'}
 				</Text>
 			</Pressable>
 		</View>

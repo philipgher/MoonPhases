@@ -15,7 +15,7 @@ module.exports = {
 	},
 	extends: ['eslint:recommended', 'plugin:react/recommended'],
 	rules: {
-		'react-native/no-unused-styles': 2,
+		'react-native/no-unused-styles': ['error'],
 		'react-native/split-platform-components': 2,
 		'react-native/no-inline-styles': 2,
 		'react-native/no-color-literals': 0,
@@ -65,6 +65,14 @@ module.exports = {
 				'minProperties': 3,
 			},
 		}],
+		'padding-line-between-statements': [
+			'error',
+			{
+				'blankLine': 'always',
+				'prev': '*',
+				'next': ['return', 'export', 'block', 'block-like', 'case', 'default'],
+			},
+		],
 		'object-curly-spacing': ['error', 'always'],
 		'key-spacing': ['error'],
 		'no-trailing-spaces': 'error',
