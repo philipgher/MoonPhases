@@ -49,8 +49,9 @@ const Moon = ({ moonIllumination }) => {
 	// Quadratic curve: Q x1 y1, x y || q dx1 dy1, dx dy
 	// Stringing together multiple quadratic Béziers: T x y || t dx dy
 
-	const visiblePartX = remap(moonIllumination.fraction, [0, 1], [0, 200]);
-	const corCurve = 3;
+	// const visiblePartX = remap(moonIllumination.fraction, [0, 1], [0, 200]);
+	const visiblePartX = 100;
+	const corCurve = 45;
 
 	return (
 		<View style={styles.container}>
@@ -65,12 +66,20 @@ const Moon = ({ moonIllumination }) => {
 			>
 				<Path
 					d={`
-                        M 100 0
-						Q ${visiblePartX - corCurve} ${corCurve} ${visiblePartX} 100
-						Q ${visiblePartX - corCurve} ${200 - corCurve} 100 200
-						Q ${corCurve} ${200 - corCurve} 0 100
-						Q ${corCurve} ${corCurve} 100 0
-                    `}
+						M 100 0
+						C 	${remap(visiblePartX, [0, 200], [0, 200 - corCurve])} ${20 - remap(visiblePartX, [0, 200], [0, 20])},
+							${visiblePartX} ${100 - remap(visiblePartX, [0, 200], [0, 55])},
+							${visiblePartX} 100
+						C	${visiblePartX} ${200 - (100 - remap(visiblePartX, [0, 200], [0, 55]))},
+							${remap(visiblePartX, [0, 200], [0, 200 - corCurve])} ${200 - (20 - remap(visiblePartX, [0, 200], [0, 20]))},
+							100 200
+						C 	${corCurve} 200,
+							0 ${200 - corCurve},
+							0 100
+						C 	0 ${corCurve},
+							${corCurve} 0,
+							100 0
+					`}
 					fill="#191D40"
 					opacity="0.9"
 				/>
