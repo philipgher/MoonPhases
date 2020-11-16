@@ -1,47 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, StyleSheet, View } from 'react-native';
-import Svg, { Defs, Path } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 import { remap } from '@anselan/maprange';
 
 import moon from '../assets/moon.png';
 
 const Moon = ({ moonIllumination }) => {
-	const [transSlice, setTransSlice] = useState({
-		left: {
-		},
-		right: {
-		},
-	});
-
-	const updateMoon = (phase) => {
-		var phaseScale = 1,
-			phaseTrans = 100,
-			phaseRight = 0;
-
-		if (phase <= 100) {
-			phaseRight = (1-phase/100);
-		}
-
-		if (phase >= 100) {
-			phaseScale = (1-(phase-100)/100);
-			phaseTrans = 100*phaseScale;
-		}
-
-		setTransSlice({
-			right: {
-				transform: 'scaleX(' + phaseRight + ')',
-			},
-			left: {
-				transform: `translate(${phaseTrans}px, 0) scaleX(${1 - phaseScale})`,
-			},
-		});
-	};
-
-	useEffect(() => {
-		updateMoon(5);
-	}, []);
-
 	// https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
 	// Move to: M x y
 	// Bézier curve: C x1 y1, x2 y2, x y || c dx1 dy1, dx2 dy2, dx dy
@@ -49,9 +14,14 @@ const Moon = ({ moonIllumination }) => {
 	// Quadratic curve: Q x1 y1, x y || q dx1 dy1, dx dy
 	// Stringing together multiple quadratic Béziers: T x y || t dx dy
 
-	// const visiblePartX = remap(moonIllumination.fraction, [0, 1], [0, 200]);
-	const visiblePartX = 100;
-	const corCurve = 45;
+	const visiblePartX = 200 - remap(moonIllumination.fraction, [0, 1], [0, 200]);
+	// const visiblePartX = 40;
+	const bezierToCircleDeviator = 45;
+	const yDeviator = 11;
+
+	let topBottomPuller = visiblePartX >= 100
+		? remap(visiblePartX, [100, 200], [100, 155])
+		: remap(visiblePartX, [0, 100], [0, 100]);
 
 	return (
 		<View style={styles.container}>
@@ -67,17 +37,17 @@ const Moon = ({ moonIllumination }) => {
 				<Path
 					d={`
 						M 100 0
-						C 	${remap(visiblePartX, [0, 200], [0, 200 - corCurve])} ${20 - remap(visiblePartX, [0, 200], [0, 20])},
-							${visiblePartX} ${100 - remap(visiblePartX, [0, 200], [0, 55])},
+						C 	${topBottomPuller} ${yDeviator - remap(visiblePartX, [0, 200], [0, yDeviator])},
+							${visiblePartX} ${100 - remap(visiblePartX, [0, 200], [0, bezierToCircleDeviator])},
 							${visiblePartX} 100
-						C	${visiblePartX} ${200 - (100 - remap(visiblePartX, [0, 200], [0, 55]))},
-							${remap(visiblePartX, [0, 200], [0, 200 - corCurve])} ${200 - (20 - remap(visiblePartX, [0, 200], [0, 20]))},
+						C	${visiblePartX} ${200 - (100 - remap(visiblePartX, [0, 200], [0, bezierToCircleDeviator]))},
+							${topBottomPuller} ${200 - (yDeviator - remap(visiblePartX, [0, 200], [0, yDeviator]))},
 							100 200
-						C 	${corCurve} 200,
-							0 ${200 - corCurve},
+						C 	${bezierToCircleDeviator} 200,
+							0 ${200 - bezierToCircleDeviator},
 							0 100
-						C 	0 ${corCurve},
-							${corCurve} 0,
+						C 	0 ${bezierToCircleDeviator},
+							${bezierToCircleDeviator} 0,
 							100 0
 					`}
 					fill="#191D40"
@@ -108,6 +78,11 @@ const styles = StyleSheet.create({
 });
 
 Moon.propTypes = {
+	moonIllumination: PropTypes.shape({
+		angle: PropTypes.number.isRequired,
+		fraction: PropTypes.number.isRequired,
+		phase: PropTypes.number.isRequired,
+	}),
 };
 
 export default Moon;
