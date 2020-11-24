@@ -1,70 +1,87 @@
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
+import { StyleSheet, View } from 'react-native';
 import SunCalc from 'suncalc';
 import { DateTime } from 'luxon';
-import moon from './assets/moon.png';
 
 import HeaderBar from './components/HeaderBar';
+import DateBar from './components/DateBar';
 import Moon from './components/Moon';
+import DataContainer from './components/DataContainer';
 
 import getMoonPhase from './utils/getMoonPhase';
+import getLocation from './utils/getLocation';
 
 const App = () => {
-	const [moonTimes, setMoonTimes] = useState();
-	const [moonIllumination, setMoonIllumutation] = useState(SunCalc.getMoonIllumination(new Date()));
+
+	const [location, setLocation] = useState();
+	const [moonTimes, setMoonTimes] = useState({});
+	const [activeDay, setActiveDay] = useState(DateTime.local());
+	const [moonIllumination, setMoonIllumutation] = useState(SunCalc.getMoonIllumination(activeDay));
 	const [moonPhase, setMoonPhase] = useState(getMoonPhase(moonIllumination));
 
+	// moonIllumination and moonPhase effect
 	useEffect(() => {
-		Geolocation.getCurrentPosition(info => {
-			console.log(info);
+		const newMoonIllumination = SunCalc.getMoonIllumination(activeDay);
+		setMoonIllumutation(newMoonIllumination);
+		setMoonPhase(getMoonPhase(newMoonIllumination));
+	}, [activeDay]);
 
-			const moonTimesRaw = SunCalc.getMoonTimes(
-				new Date(),
-				info.coords.latitude,
-				info.coords.longitude
-			);
+	// moonTimes effect
+	useEffect(() => {
+		if (!location) {
+			return;
+		}
 
-			console.log(moonTimesRaw);
-
+		if (location.errorMessage) {
 			setMoonTimes({
-				rise: DateTime.fromJSDate(moonTimesRaw.rise).toLocaleString({
-					hour: '2-digit',
-					minute: '2-digit',
-				}),
-				set: DateTime.fromJSDate(moonTimesRaw.set).toLocaleString({
-					hour: '2-digit',
-					minute: '2-digit',
-				}),
+				rise: 'X',
+				set: 'X',
 			});
-		}, error => {
-			console.error(error);
-		});
-	}, []);
 
-	console.log('moonTimes', moonTimes);
-	console.log('moonIllumination', moonIllumination);
-	console.log('moonPhase', moonPhase);
+			return;
+		}
+
+		const moonTimesRaw = SunCalc.getMoonTimes(
+			activeDay,
+			location.latitude,
+			location.longitude
+		);
+
+		setMoonTimes({
+			rise: DateTime.fromJSDate(moonTimesRaw.rise).toLocaleString({
+				hour: '2-digit',
+				minute: '2-digit',
+			}),
+			set: DateTime.fromJSDate(moonTimesRaw.set).toLocaleString({
+				hour: '2-digit',
+				minute: '2-digit',
+			}),
+		});
+	}, [location, activeDay]);
+
+	// location effect
+	useEffect(() => {
+		(async () => {
+			const retreivedLocation = await getLocation();
+			setLocation(retreivedLocation);
+		})();
+	}, []);
 
 	return (
 		<View style={styles.container}>
 			<HeaderBar />
-			<Text>
-				{moonPhase.name}
-				<br />
-				{moonPhase.state}
-				<br />
-				<br />
-				{moonTimes && (
-					<>
-						{`Moon rise: ${moonTimes.rise}`}
-						<br />
-						{`Moon set: ${moonTimes.set}`}
-					</>
-				)}
-			</Text>
+			<DateBar
+				activeDay={activeDay}
+				moonIllumination={moonIllumination}
+				moonPhase={moonPhase}
+				setActiveDay={setActiveDay}
+			/>
 			<Moon
 				moonIllumination={moonIllumination}
+			/>
+			<DataContainer
+				moonIllumination={moonIllumination}
+				moonTimes={moonTimes}
 			/>
 		</View>
 	);
@@ -73,15 +90,10 @@ const App = () => {
 const styles = StyleSheet.create({
 	container: {
 		position: 'absolute',
-		top: '0',
+		top: '0%',
 		width: '100%',
 		height: '100%',
-	},
-	image: {
-		backgroundColor: 'yellow',
-		height: '50%',
-		width: '60%',
-		resizeMode: 'contain',
+		backgroundColor: '#191D40',
 	},
 });
 

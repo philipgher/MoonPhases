@@ -24,18 +24,15 @@ const Moon = ({ moonIllumination }) => {
 		: remap(visiblePartX, [0, 100], [0, 100]);
 
 	return (
-		<View style={styles.container}>
-			<Image
-				source={moon}
-				style={styles.image}
-			/>
-			<Svg
-				height="200"
-				style={styles.moonContainer}
-				width="200"
-			>
-				<Path
-					d={`
+		<View style={styles.contentBox}>
+			<View style={styles.moonContainer}>
+				<Image
+					source={moon}
+					style={styles.image}
+				/>
+				<Svg style={styles.overlayContainer}>
+					<Path
+						d={`
 						M 100 0
 						C 	${topBottomPuller} ${yDeviator - remap(visiblePartX, [0, 200], [0, yDeviator])},
 							${visiblePartX} ${100 - remap(visiblePartX, [0, 200], [0, bezierToCircleDeviator])},
@@ -50,30 +47,37 @@ const Moon = ({ moonIllumination }) => {
 							${bezierToCircleDeviator} 0,
 							100 0
 					`}
-					fill="#191D40"
-					opacity="0.9"
-				/>
-			</Svg>
+						fill="#191D40"
+						opacity="0.9"
+					/>
+				</Svg>
+			</View>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	container: {
-		width: '200px',
-		height: '200px',
-		position: 'relative',
-	},
-	image: {
+	contentBox: {
+		top: '20%',
 		width: '100%',
-		height: '100%',
+		height: '300px',
 		position: 'absolute',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	moonContainer: {
-		top: '0',
-		left: '0',
+		width: '200px',
+	},
+	image: {
+		width: '200px',
+		height: '200px',
+	},
+	overlayContainer: {
+		width: '200px',
+		height: '200px',
 		position: 'absolute',
-		margin: '0',
+		margin: '0%',
 	},
 });
 

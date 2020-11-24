@@ -7,11 +7,7 @@ const HeaderBar = () => {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.center}>
-				{DateTime.local().toLocaleString({
-					year: 'numeric',
-					month: 'long',
-					day: 'numeric',
-				})}
+				{'Daily Moon'}
 			</Text>
 			<Pressable style={styles.topRight}>
 				<Text>
@@ -26,7 +22,7 @@ const styles = StyleSheet.create({
 	container: {
 		position: 'relative',
 		width: '100%',
-		height: '20pt',
+		height: '5%',
 	},
 	center: {
 		position: 'absolute',
