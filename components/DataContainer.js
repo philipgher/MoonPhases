@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import TextField from './TextField';
 import TextFieldInline from './TextFieldInline';
 
-const DataContainer = ({ moonTimes }) => {
+const DataContainer = ({ moonTimes, moonPosition, moonZodiac }) => {
 	return (
 		<View style={styles.dataContainer}>
 			<View style={[styles.row, styles.rowContainer, styles.rowGap]}>
@@ -36,21 +36,22 @@ const DataContainer = ({ moonTimes }) => {
 					value={moonTimes.set}
 				/>
 			</View>
-			<TextField
+			{/* <TextField
 				style={styles.row}
 				title="Lunar eclipse"
 				value="?"
-			/>
+			/> */}
 			<TextField
 				style={styles.row}
 				title="Moon zodiac"
-				value="?"
+				value={moonZodiac}
 			/>
 			<TextField
 				style={styles.row}
 				title="Altitude"
-				value="?"
+				value={moonPosition ? `${(moonPosition.altitude * 180 / Math.PI).toFixed(1)}°` : ''}
 			/>
+			<View style={styles.spacer} />
 		</View>
 	);
 };
@@ -74,6 +75,10 @@ const styles = StyleSheet.create({
 	left: { marginRight: '2px' },
 	right: { marginLeft: '2px' },
 	rowGap: { marginBottom: '30px' },
+	spacer: {
+		height: '30px',
+		width: '100%',
+	},
 });
 
 DataContainer.propTypes = {
@@ -81,6 +86,8 @@ DataContainer.propTypes = {
 		rise: PropTypes.string,
 		set: PropTypes.string,
 	}).isRequired,
+	moonZodiac: PropTypes.string,
+	moonPosition: PropTypes.shape({ altitude: PropTypes.number.isRequired }),
 };
 
 export default DataContainer;

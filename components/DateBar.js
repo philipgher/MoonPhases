@@ -10,11 +10,21 @@ import arrow from '../assets/arrow.png';
 
 const DateBar = ({ activeDay, setActiveDay, moonPhase, moonIllumination }) => {
 	const handleClickYesterday = () => {
-		setActiveDay(activeDay.minus({ days: 1 }));
+		setActiveDay(activeDay.minus({
+			days: 1,
+			hours: 0,
+			minutes: 0,
+			seconds: 0,
+		}));
 	};
 
 	const handleClickTomorrow = () => {
-		setActiveDay(activeDay.plus({ days: 1 }));
+		setActiveDay(activeDay.plus({
+			days: 1,
+			hours: 0,
+			minutes: 0,
+			seconds: 0,
+		}));
 	};
 
 	return (

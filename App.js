@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import SunCalc from 'suncalc';
+import MoonCalc from 'mooncalc';
 import { DateTime } from 'luxon';
 
 import HeaderBar from './components/HeaderBar';
@@ -12,12 +13,14 @@ import getMoonPhase from './utils/getMoonPhase';
 import getLocation from './utils/getLocation';
 
 const App = () => {
-
-	const [location, setLocation] = useState();
-	const [moonTimes, setMoonTimes] = useState({});
 	const [activeDay, setActiveDay] = useState(DateTime.local());
+	const [location, setLocation] = useState();
+
+	const [moonTimes, setMoonTimes] = useState({});
 	const [moonIllumination, setMoonIllumutation] = useState(SunCalc.getMoonIllumination(activeDay));
+	const [moonPosition, setMoonPosition] = useState();
 	const [moonPhase, setMoonPhase] = useState(getMoonPhase(moonIllumination));
+	const [moonZodiac, setMoonZodiac] = useState();
 
 	// moonIllumination and moonPhase effect
 	useEffect(() => {
@@ -26,7 +29,7 @@ const App = () => {
 		setMoonPhase(getMoonPhase(newMoonIllumination));
 	}, [activeDay]);
 
-	// moonTimes effect
+	// moonTimes, moonPosition and moonZodiac effect
 	useEffect(() => {
 		if (!location) {
 			return;
@@ -41,8 +44,13 @@ const App = () => {
 			return;
 		}
 
+		const plainJSActiveDay = new Date(activeDay.toISO());
+
+		setMoonZodiac(MoonCalc.datasForDay(plainJSActiveDay).constellation);
+		setMoonPosition(SunCalc.getMoonPosition(activeDay, location.latitude, location.longitude));
+
 		const moonTimesRaw = SunCalc.getMoonTimes(
-			activeDay,
+			plainJSActiveDay,
 			location.latitude,
 			location.longitude
 		);
@@ -70,19 +78,22 @@ const App = () => {
 	return (
 		<View style={styles.container}>
 			<HeaderBar />
-			<DateBar
-				activeDay={activeDay}
-				moonIllumination={moonIllumination}
-				moonPhase={moonPhase}
-				setActiveDay={setActiveDay}
-			/>
-			<Moon
-				moonIllumination={moonIllumination}
-			/>
-			<DataContainer
-				moonIllumination={moonIllumination}
-				moonTimes={moonTimes}
-			/>
+			<View style={styles.scrollContainer}>
+				<DateBar
+					activeDay={activeDay}
+					moonIllumination={moonIllumination}
+					moonPhase={moonPhase}
+					setActiveDay={setActiveDay}
+				/>
+				<Moon
+					moonIllumination={moonIllumination}
+				/>
+				<DataContainer
+					moonPosition={moonPosition}
+					moonTimes={moonTimes}
+					moonZodiac={moonZodiac}
+				/>
+			</View>
 		</View>
 	);
 };
@@ -94,6 +105,14 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '100%',
 		backgroundColor: '#191D40',
+		overflow: 'hidden',
+	},
+	scrollContainer: {
+		position: 'absolute',
+		top: '5%',
+		width: '100%',
+		height: '95%',
+		overflow: 'scroll',
 	},
 });
 
