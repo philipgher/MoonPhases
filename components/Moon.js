@@ -58,24 +58,22 @@ const Moon = ({ moonIllumination }) => {
 
 const styles = StyleSheet.create({
 	contentBox: {
-		top: '20%',
+		position: 'relative',
+		top: 20,
 		width: '100%',
-		height: '300px',
-		position: 'absolute',
+		height: 300,
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
-	moonContainer: {
-		width: '200px',
-	},
+	moonContainer: { width: 200 },
 	image: {
-		width: '200px',
-		height: '200px',
+		width: 200,
+		height: 200,
 	},
 	overlayContainer: {
-		width: '200px',
-		height: '200px',
+		width: 200,
+		height: 200,
 		position: 'absolute',
 		margin: '0%',
 	},

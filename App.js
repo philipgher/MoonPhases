@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
 import SunCalc from 'suncalc';
 import MoonCalc from 'mooncalc';
 import { DateTime } from 'luxon';
@@ -76,43 +76,49 @@ const App = () => {
 	}, []);
 
 	return (
-		<View style={styles.container}>
-			<HeaderBar />
-			<View style={styles.scrollContainer}>
-				<DateBar
-					activeDay={activeDay}
-					moonIllumination={moonIllumination}
-					moonPhase={moonPhase}
-					setActiveDay={setActiveDay}
-				/>
-				<Moon
-					moonIllumination={moonIllumination}
-				/>
-				<DataContainer
-					moonPosition={moonPosition}
-					moonTimes={moonTimes}
-					moonZodiac={moonZodiac}
-				/>
-			</View>
+		<View style={styles.background}>
+			<SafeAreaView style={styles.container}>
+				<HeaderBar />
+				<ScrollView style={styles.scrollContainer}>
+					<DateBar
+						activeDay={activeDay}
+						moonIllumination={moonIllumination}
+						moonPhase={moonPhase}
+						setActiveDay={setActiveDay}
+					/>
+					<Moon
+						moonIllumination={moonIllumination}
+					/>
+					<DataContainer
+						moonPosition={moonPosition}
+						moonTimes={moonTimes}
+						moonZodiac={moonZodiac}
+					/>
+				</ScrollView>
+			</SafeAreaView>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	container: {
+	background: {
+		backgroundColor: '#191D40',
 		position: 'absolute',
-		top: '0%',
+		top: 0,
 		width: '100%',
 		height: '100%',
-		backgroundColor: '#191D40',
+	},
+	container: {
+		position: 'absolute',
+		top: 0,
+		width: '100%',
+		height: '100%',
 		overflow: 'hidden',
 	},
 	scrollContainer: {
-		position: 'absolute',
-		top: '5%',
+		top: 0,
 		width: '100%',
 		height: '95%',
-		overflow: 'scroll',
 	},
 });
 

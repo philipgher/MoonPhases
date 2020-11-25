@@ -58,25 +58,24 @@ const DataContainer = ({ moonTimes, moonPosition, moonZodiac }) => {
 
 const styles = StyleSheet.create({
 	dataContainer: {
-		position: 'absolute',
-		paddingLeft: '12px',
-		paddingRight: '12px',
+		paddingLeft: 12,
+		paddingRight: 12,
 		width: '100%',
-		top: 'calc(30% + 250px)',
+		top: 30,
 		display: 'flex',
 	},
-	row: { marginBottom: '4px' },
+	row: { marginBottom: 4 },
 	rowContainer: {
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 	},
 	rowChild: { width: '49.5%' },
-	left: { marginRight: '2px' },
-	right: { marginLeft: '2px' },
-	rowGap: { marginBottom: '30px' },
+	left: { marginRight: 2 },
+	right: { marginLeft: 2 },
+	rowGap: { marginBottom: 30 },
 	spacer: {
-		height: '30px',
+		height: 30,
 		width: '100%',
 	},
 });

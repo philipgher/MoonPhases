@@ -71,22 +71,22 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'center',
-		paddingTop: '10px',
+		paddingTop: 10,
 	},
 	dateContainer: { width: '65%' },
 	arrowContainer: {
-		width: '27px',
-		height: '32px',
-		padding: '10px',
+		width: 27,
+		height: 32,
+		padding: 10,
 	},
 	arrow: {
 		width: '100%',
 		height: '100%',
 	},
-	arrowContainerLeft: { marginRight: '5px' },
+	arrowContainerLeft: { marginRight: 5 },
 	arrowContainerRight: {
-		marginLeft: '5px',
-		transform: 'rotate(180deg)',
+		marginLeft: 5,
+		transform: [{ rotateY: '180deg' }],
 	},
 });
 

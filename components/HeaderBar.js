@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { DateTime } from 'luxon';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 const HeaderBar = () => {
@@ -20,9 +18,8 @@ const HeaderBar = () => {
 
 const styles = StyleSheet.create({
 	container: {
-		position: 'relative',
 		width: '100%',
-		height: '5%',
+		height: 50,
 	},
 	center: {
 		position: 'absolute',
@@ -35,8 +32,8 @@ const styles = StyleSheet.create({
 	},
 	topRight: {
 		position: 'absolute',
-		right: '0pt',
-		height: '100%',
+		right: 0,
+		height: 50,
 		width: '15%',
 		display: 'flex',
 		alignContent: 'center',
@@ -46,7 +43,6 @@ const styles = StyleSheet.create({
 	},
 });
 
-HeaderBar.propTypes = {
-};
+HeaderBar.propTypes = {};
 
 export default HeaderBar;
