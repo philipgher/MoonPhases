@@ -1,28 +1,32 @@
 const MOON_PHASES = [
 	{
-		value: 0,
+		min: 0.0,
+		max: 0.05,
 		name: 'New Moon',
 		state: 'Waxing Crescent',
 	},
 	{
-		value: 0.25,
+		min: 0.05,
+		max: 0.475,
 		name: 'First Quarter',
 		state: 'Waxing Gibbous',
 	},
 	{
-		value: 0.5,
+		min: 0.475,
+		max: 0.525,
 		name: 'Full Moon',
 		state: 'Waning Gibbous',
 	},
 	{
-		value: 0.75,
+		min: 0.525,
+		max: 1.0,
 		name: 'Last Quarter',
 		state: 'Waning Crescent',
 	},
 ];
 
 const getMoonPhase = (moonIllumination) => (
-	MOON_PHASES.find(phase => phase.value < moonIllumination.phase)
+	MOON_PHASES.find(phase => phase.min < moonIllumination.phase && phase.max > moonIllumination.phase)
 );
 
 export default getMoonPhase;
