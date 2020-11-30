@@ -7,6 +7,9 @@ import TextFieldInline from './TextFieldInline';
 
 import moonRisePNG from '../assets/moonRise.png';
 import moonSetPNG from '../assets/moonSet.png';
+import getMoonPhase from '../utils/getMoonPhase';
+
+import { MOON_PHASES } from '../utils/getMoonPhase';
 
 const DataContainer = ({
 	activeDay,
@@ -17,18 +20,48 @@ const DataContainer = ({
 }) => {
 	console.log(moonIllumination);
 
+	const isDayMoonState = (day, moonState) => {
+		const moonPhaseChecked = getMoonPhase(SunCalc.getMoonIllumination(day));
+
+		return moonPhaseChecked.name === moonState;
+	};
+
 	const nextNewMoon = (() => {
-		let beginOfFutureDay = activeDay.startOf('day');
-		let moonPhaseOfFutureDay = moonIllumination.phase;
+		let futureDay = activeDay.startOf('day');
 
-		// while (moonPhaseOfFutureDay % 0.5 <= 0.4) {
-		// 	moonPhaseOfFutureDay = SunCalc.getMoonIllumination(beginOfFutureDay).phase;
-		// 	beginOfFutureDay.plus({ days: 1 });
+		const checkIfIsNewMoon = () => {
+			futureDay = futureDay.startOf('day').plus({ days: 1 });
+			const isNewMoon = isDayMoonState(futureDay, MOON_PHASES[0].name);
 
-		// 	console.log(moonPhaseOfFutureDay);
-		// 	console.log(beginOfFutureDay);
-		// }
-		console.log('after while');
+			if (!isNewMoon) {
+				checkIfIsNewMoon();
+
+				return;
+			}
+		};
+
+		checkIfIsNewMoon();
+
+		return futureDay;
+	})();
+
+	const nextFullMoon = (() => {
+		let futureDay = activeDay.startOf('day');
+
+		const checkIfIsNextMoon = () => {
+			futureDay = futureDay.startOf('day').plus({ days: 1 });
+			const isNewMoon = isDayMoonState(futureDay, MOON_PHASES[3].name);
+
+			if (!isNewMoon) {
+				checkIfIsNextMoon();
+
+				return;
+			}
+		};
+
+		checkIfIsNextMoon();
+
+		return futureDay;
 	})();
 
 	return (
@@ -38,14 +71,22 @@ const DataContainer = ({
 					<TextFieldInline value="Next new moon" />
 					<TextFieldInline
 						type={TextFieldInline.type.sub}
-						value="?"
+						value={nextNewMoon?.toLocaleString({
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric',
+						})}
 					/>
 				</View>
 				<View style={[styles.left, styles.rowChild]}>
 					<TextFieldInline value="Next full moon" />
 					<TextFieldInline
 						type={TextFieldInline.type.sub}
-						value="?"
+						value={nextFullMoon?.toLocaleString({
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric',
+						})}
 					/>
 				</View>
 			</View>

@@ -1,4 +1,4 @@
-const MOON_PHASES = [
+export const MOON_PHASES = [
 	{
 		min: 0.0,
 		max: 0.05,
