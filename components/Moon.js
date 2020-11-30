@@ -15,8 +15,8 @@ const Moon = ({ moonIllumination }) => {
 	// Stringing together multiple quadratic Béziers: T x y || t dx dy
 
 	const visiblePartX = 200 - remap(moonIllumination.fraction, [0, 1], [0, 200]);
-	// const visiblePartX = 40;
-	const bezierToCircleDeviator = 45;
+	// const visiblePartX = 200;
+	const bezierToCircleDeviator = 48;
 	const yDeviator = 11;
 
 	let topBottomPuller = visiblePartX >= 100
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
 		height: 200,
 		position: 'absolute',
 		margin: '0%',
+		transform: [{ scale: '1.02' }],
 	},
 });
 
