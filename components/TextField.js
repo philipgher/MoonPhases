@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import {
 	useFonts,
 	Poppins_300Light,
@@ -8,7 +8,7 @@ import {
 	Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 
-const TextField = ({ title, value, style, ...props }) => {
+const TextField = ({ title, icon, value, style, ...props }) => {
 	const [isFontsLoaded] = useFonts({
 		Poppins_300Light,
 		Poppins_500Medium,
@@ -24,9 +24,17 @@ const TextField = ({ title, value, style, ...props }) => {
 			{...props}
 			style={[style, styles.container]}
 		>
-			<Text style={[styles.text, styles.title, { fontFamily: 'Poppins_500Medium' }]}>
-				{title}
-			</Text>
+			<View style={styles.titleContainer}>
+				{icon && (
+					<Image
+						source={icon}
+						style={styles.icon}
+					/>
+				)}
+				<Text style={[styles.text, styles.title, { fontFamily: 'Poppins_500Medium' }]}>
+					{title}
+				</Text>
+			</View>
 			<Text style={[styles.text, styles.value, { fontFamily: 'Poppins_300Light' }]}>
 				{value}
 			</Text>
@@ -50,6 +58,15 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 14,
 	},
+	icon: {
+		width: 14,
+		height: 20,
+		marginRight: 9,
+	},
+	titleContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+	},
 	title: {},
 	value: {},
 });
@@ -57,6 +74,7 @@ const styles = StyleSheet.create({
 TextField.propTypes = {
 	title: PropTypes.string.isRequired,
 	value: PropTypes.string,
+	icon: PropTypes.string,
 	style: PropTypes.any,
 };
 

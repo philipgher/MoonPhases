@@ -56,14 +56,8 @@ const App = () => {
 		);
 
 		setMoonTimes({
-			rise: DateTime.fromJSDate(moonTimesRaw.rise).toLocaleString({
-				hour: '2-digit',
-				minute: '2-digit',
-			}),
-			set: DateTime.fromJSDate(moonTimesRaw.set).toLocaleString({
-				hour: '2-digit',
-				minute: '2-digit',
-			}),
+			rise: DateTime.fromJSDate(moonTimesRaw.rise).toFormat('HH:MM'),
+			set: DateTime.fromJSDate(moonTimesRaw.set).toFormat('HH:MM'),
 		});
 	}, [location, activeDay]);
 
@@ -90,6 +84,8 @@ const App = () => {
 						moonIllumination={moonIllumination}
 					/>
 					<DataContainer
+						activeDay={activeDay}
+						moonIllumination={moonIllumination}
 						moonPosition={moonPosition}
 						moonTimes={moonTimes}
 						moonZodiac={moonZodiac}
