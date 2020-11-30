@@ -1,10 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
+import SunCalc from 'suncalc';
 import TextField from './TextField';
 import TextFieldInline from './TextFieldInline';
 
-const DataContainer = ({ moonTimes, moonPosition, moonZodiac }) => {
+import moonRisePNG from '../assets/moonRise.png';
+import moonSetPNG from '../assets/moonSet.png';
+
+const DataContainer = ({
+	activeDay,
+	moonTimes,
+	moonPosition,
+	moonZodiac,
+	moonIllumination,
+}) => {
+	console.log(moonIllumination);
+
+	const nextNewMoon = (() => {
+		let beginOfFutureDay = activeDay.startOf('day');
+		let moonPhaseOfFutureDay = moonIllumination.phase;
+
+		// while (moonPhaseOfFutureDay % 0.5 <= 0.4) {
+		// 	moonPhaseOfFutureDay = SunCalc.getMoonIllumination(beginOfFutureDay).phase;
+		// 	beginOfFutureDay.plus({ days: 1 });
+
+		// 	console.log(moonPhaseOfFutureDay);
+		// 	console.log(beginOfFutureDay);
+		// }
+		console.log('after while');
+	})();
+
 	return (
 		<View style={styles.dataContainer}>
 			<View style={[styles.row, styles.rowContainer, styles.rowGap]}>
@@ -26,11 +52,13 @@ const DataContainer = ({ moonTimes, moonPosition, moonZodiac }) => {
 
 			<View style={[styles.row, styles.rowContainer]}>
 				<TextField
+					icon={moonRisePNG}
 					style={[styles.left, styles.rowChild]}
 					title="Moonrise"
 					value={moonTimes.rise}
 				/>
 				<TextField
+					icon={moonSetPNG}
 					style={[styles.right, styles.rowChild]}
 					title="Moonset"
 					value={moonTimes.set}
