@@ -18,8 +18,6 @@ const DataContainer = ({
 	moonZodiac,
 	moonIllumination,
 }) => {
-	console.log(moonIllumination);
-
 	const isDayMoonState = (day, moonState) => {
 		const moonPhaseChecked = getMoonPhase(SunCalc.getMoonIllumination(day));
 

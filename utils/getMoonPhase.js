@@ -3,25 +3,41 @@ export const MOON_PHASES = [
 		min: 0.0,
 		max: 0.05,
 		name: 'New Moon',
-		state: 'Waxing Crescent',
 	},
 	{
 		min: 0.05,
-		max: 0.475,
+		max: 0.25,
+		name: 'Waxing Crescent',
+	},
+	{
+		min: 0.25,
+		max: 0.255,
 		name: 'First Quarter',
-		state: 'Waxing Gibbous',
 	},
 	{
-		min: 0.475,
-		max: 0.525,
+		min: 0.255,
+		max: 0.5,
+		name: 'Waxing Gibbous',
+	},
+	{
+		min: 0.5,
+		max: 0.55,
 		name: 'Full Moon',
-		state: 'Waning Gibbous',
 	},
 	{
-		min: 0.525,
-		max: 1.0,
+		min: 0.55,
+		max: 0.75,
+		name: 'Waning Gibbous',
+	},
+	{
+		min: 0.75,
+		max: 0.755,
 		name: 'Last Quarter',
-		state: 'Waning Crescent',
+	},
+	{
+		min: 0.755,
+		max: 1.0,
+		name: 'Waning Crescent',
 	},
 ];
 
