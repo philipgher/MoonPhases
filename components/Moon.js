@@ -6,7 +6,7 @@ import { remap } from '@anselan/maprange';
 
 import moon from '../assets/moon.png';
 
-const Moon = ({ moonIllumination }) => {
+const Moon = ({ moonIllumination, moonPosition }) => {
 	// https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
 	// Move to: M x y
 	// Bézier curve: C x1 y1, x2 y2, x y || c dx1 dy1, dx2 dy2, dx dy
@@ -25,7 +25,17 @@ const Moon = ({ moonIllumination }) => {
 
 	return (
 		<View style={styles.contentBox}>
-			<View style={styles.moonContainer}>
+			<View
+				style={[
+					styles.moonContainer,
+					{
+						transform: [
+							{ scale: moonPosition ? remap(moonPosition.distance, [363104, 405696], [0.9, 1.1]) : 1 },
+							{ rotate: moonPosition ? `${(moonPosition.parallacticAngle * 180 / Math.PI)}deg` : '0deg' },
+						],
+					},
+				]}
+			>
 				<Image
 					source={moon}
 					style={styles.image}
@@ -76,7 +86,7 @@ const styles = StyleSheet.create({
 		height: 200,
 		position: 'absolute',
 		margin: '0%',
-		transform: [{ scale: '1.02' }],
+		transform: [{ scale: 1.02 }],
 	},
 });
 
@@ -85,6 +95,11 @@ Moon.propTypes = {
 		angle: PropTypes.number.isRequired,
 		fraction: PropTypes.number.isRequired,
 		phase: PropTypes.number.isRequired,
+	}),
+	moonPosition: PropTypes.shape({
+		altitude: PropTypes.number.isRequired,
+		distance: PropTypes.number.isRequired,
+		parallacticAngle: PropTypes.number.isRequired,
 	}),
 };
 

@@ -9,7 +9,6 @@ const getLocationAsync = async () => {
 	}
 
 	let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
-
 	const { latitude, longitude } = location.coords;
 
 	return {

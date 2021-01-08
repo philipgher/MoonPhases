@@ -11,6 +11,7 @@
     "@anselan/maprange": "^0.6.1",
     "@expo-google-fonts/poppins": "^0.1.0",
     "expo": "~39.0.2",
+    "expo-ads-admob": "~8.3.0",
     "expo-font": "~8.3.0",
     "expo-location": "~9.0.0",
     "expo-permissions": "~9.3.0",

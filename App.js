@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, View, SafeAreaView, ScrollView, Platform, StatusBar } from 'react-native';
 import SunCalc from 'suncalc';
 import MoonCalc from 'mooncalc';
 import { DateTime } from 'luxon';
@@ -8,6 +8,7 @@ import HeaderBar from './components/HeaderBar';
 import DateBar from './components/DateBar';
 import Moon from './components/Moon';
 import DataContainer from './components/DataContainer';
+import AdBanner from './components/AdBanner';
 
 import getMoonPhase from './utils/getMoonPhase';
 import getLocation from './utils/getLocation';
@@ -21,6 +22,13 @@ const App = () => {
 	const [moonPosition, setMoonPosition] = useState();
 	const [moonPhase, setMoonPhase] = useState(getMoonPhase(moonIllumination));
 	const [moonZodiac, setMoonZodiac] = useState();
+
+	console.log('moonTimes', moonTimes);
+	console.log('moonIllumination', moonIllumination);
+	console.log('moonPosition', moonPosition);
+	console.log('moonPhase', moonPhase);
+	console.log('moonZodiac', moonZodiac);
+	console.log('---- ----');
 
 	// moonIllumination and moonPhase effect
 	useEffect(() => {
@@ -64,16 +72,19 @@ const App = () => {
 	// location effect
 	useEffect(() => {
 		(async () => {
-			const retreivedLocation = await getLocation();
-			setLocation(retreivedLocation);
+			setLocation(await getLocation());
 		})();
 	}, []);
 
 	return (
 		<View style={styles.background}>
+			<StatusBar
+				translucent
+				backgroundColor="rgb(51, 56, 86)"
+			/>
 			<SafeAreaView style={styles.container}>
-				<HeaderBar />
 				<ScrollView style={styles.scrollContainer}>
+					<HeaderBar />
 					<DateBar
 						activeDay={activeDay}
 						moonIllumination={moonIllumination}
@@ -82,6 +93,7 @@ const App = () => {
 					/>
 					<Moon
 						moonIllumination={moonIllumination}
+						moonPosition={moonPosition}
 					/>
 					<DataContainer
 						activeDay={activeDay}
@@ -91,6 +103,7 @@ const App = () => {
 						moonZodiac={moonZodiac}
 					/>
 				</ScrollView>
+				<AdBanner />
 			</SafeAreaView>
 		</View>
 	);
@@ -98,18 +111,20 @@ const App = () => {
 
 const styles = StyleSheet.create({
 	background: {
-		backgroundColor: '#191D40',
+		backgroundColor: 'rgb(51, 56, 86)',
 		position: 'absolute',
 		top: 0,
 		width: '100%',
 		height: '100%',
 	},
 	container: {
+		backgroundColor: '#191D40',
 		position: 'absolute',
 		top: 0,
 		width: '100%',
 		height: '100%',
 		overflow: 'hidden',
+		paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
 	},
 	scrollContainer: {
 		top: 0,

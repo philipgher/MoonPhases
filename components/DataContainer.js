@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
-import SunCalc from 'suncalc';
+import { DateTime } from 'luxon';
+
 import TextField from './TextField';
 import TextFieldInline from './TextFieldInline';
 
 import moonRisePNG from '../assets/moonRise.png';
 import moonSetPNG from '../assets/moonSet.png';
-import getMoonPhase from '../utils/getMoonPhase';
 
-import { MOON_PHASES } from '../utils/getMoonPhase';
+import getDayOfNextMoonState from '../utils/getDayOfNextMoonState';
 
 const DataContainer = ({
 	activeDay,
@@ -18,49 +18,8 @@ const DataContainer = ({
 	moonZodiac,
 	moonIllumination,
 }) => {
-	const isDayMoonState = (day, moonState) => {
-		const moonPhaseChecked = getMoonPhase(SunCalc.getMoonIllumination(day));
-
-		return moonPhaseChecked.name === moonState;
-	};
-
-	const nextNewMoon = (() => {
-		let futureDay = activeDay.startOf('day');
-
-		const checkIfIsNewMoon = () => {
-			futureDay = futureDay.startOf('day').plus({ days: 1 });
-			const isNewMoon = isDayMoonState(futureDay, MOON_PHASES[0].name);
-
-			if (!isNewMoon) {
-				checkIfIsNewMoon();
-
-				return;
-			}
-		};
-
-		checkIfIsNewMoon();
-
-		return futureDay;
-	})();
-
-	const nextFullMoon = (() => {
-		let futureDay = activeDay.startOf('day');
-
-		const checkIfIsNextMoon = () => {
-			futureDay = futureDay.startOf('day').plus({ days: 1 });
-			const isNewMoon = isDayMoonState(futureDay, MOON_PHASES[3].name);
-
-			if (!isNewMoon) {
-				checkIfIsNextMoon();
-
-				return;
-			}
-		};
-
-		checkIfIsNextMoon();
-
-		return futureDay;
-	})();
+	const nextNewMoon = getDayOfNextMoonState(activeDay, 'New Moon');
+	const nextFullMoon = getDayOfNextMoonState(activeDay, 'Full Moon');
 
 	return (
 		<View style={styles.dataContainer}>
@@ -115,6 +74,16 @@ const DataContainer = ({
 			/>
 			<TextField
 				style={styles.row}
+				title="Distance"
+				value={moonPosition ? `${moonPosition.distance.toFixed(0)} km` : ''}
+			/>
+			<TextField
+				style={styles.row}
+				title="Parallactic angle"
+				value={moonPosition ? `${(moonPosition.parallacticAngle * 180 / Math.PI).toFixed(1)}°` : ''}
+			/>
+			<TextField
+				style={styles.row}
 				title="Altitude"
 				value={moonPosition ? `${(moonPosition.altitude * 180 / Math.PI).toFixed(1)}°` : ''}
 			/>
@@ -142,18 +111,23 @@ const styles = StyleSheet.create({
 	right: { marginLeft: 2 },
 	rowGap: { marginBottom: 30 },
 	spacer: {
-		height: 30,
+		height: 50,
 		width: '100%',
 	},
 });
 
 DataContainer.propTypes = {
+	activeDay: PropTypes.instanceOf(DateTime),
 	moonTimes: PropTypes.shape({
 		rise: PropTypes.string,
 		set: PropTypes.string,
 	}).isRequired,
 	moonZodiac: PropTypes.string,
-	moonPosition: PropTypes.shape({ altitude: PropTypes.number.isRequired }),
+	moonPosition: PropTypes.shape({
+		altitude: PropTypes.number.isRequired,
+		distance: PropTypes.number.isRequired,
+		parallacticAngle: PropTypes.number.isRequired,
+	}),
 };
 
 export default DataContainer;

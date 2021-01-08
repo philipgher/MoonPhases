@@ -1,23 +1,40 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
+import TextFieldInline from './TextFieldInline';
+
+import settingsIcon from '../assets/settings.png';
 
 const HeaderBar = () => {
+	const handlePressSettings = () => {
+		console.log('presseddd');
+	};
+
 	return (
 		<View style={styles.container}>
-			<Text style={styles.center}>
-				{'Daily Moon'}
-			</Text>
-			<Pressable style={styles.topRight}>
-				<Text>
-					{'Calendar'}
-				</Text>
+			<Pressable
+				style={styles.iconContainer}
+				onPress={handlePressSettings}
+			>
+				<Image
+					source={settingsIcon}
+					style={styles.icon}
+				/>
 			</Pressable>
+			<TextFieldInline
+				fontSize={20}
+				style={styles.center}
+				type={TextFieldInline.type.sub}
+				value="DailyMoon"
+			/>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
+		display: 'flex',
+		alignContent: 'center',
+		justifyContent: 'center',
 		width: '100%',
 		height: 50,
 	},
@@ -25,21 +42,19 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		left: '15%',
 		width: '70%',
-		display: 'flex',
-		alignContent: 'center',
-		justifyContent: 'center',
 		textAlign: 'center',
 	},
-	topRight: {
-		position: 'absolute',
-		right: 0,
+	iconContainer: {
+		width: 60,
 		height: 50,
-		width: '15%',
-		display: 'flex',
-		alignContent: 'center',
-		justifyContent: 'center',
-		textAlign: 'center',
-		backgroundColor: 'green',
+		paddingTop: 11,
+		paddingBottom: 16,
+		paddingLeft: 19,
+		paddingRight: 19,
+	},
+	icon: {
+		width: '100%',
+		height: '100%',
 	},
 });
 

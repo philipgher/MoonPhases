@@ -8,7 +8,7 @@ import {
 	Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 
-const TextFieldInline = ({ value, type, style, ...props }) => {
+const TextFieldInline = ({ value, type, style, color, fontSize, ...props }) => {
 	const [isFontsLoaded] = useFonts({
 		Poppins_300Light,
 		Poppins_500Medium,
@@ -44,7 +44,11 @@ const TextFieldInline = ({ value, type, style, ...props }) => {
 				style={[
 					styles.text,
 					styles[type],
-					{ fontFamily },
+					{
+						fontFamily,
+						color,
+						[fontSize && 'fontSize']: fontSize,
+					},
 				]}
 			>
 				{value}
@@ -55,10 +59,7 @@ const TextFieldInline = ({ value, type, style, ...props }) => {
 
 const styles = StyleSheet.create({
 	container: {},
-	text: {
-		textAlign: 'center',
-		color: 'white',
-	},
+	text: { textAlign: 'center' },
 	// eslint-disable-next-line react-native/no-unused-styles
 	title: { fontSize: 21 },
 	// eslint-disable-next-line react-native/no-unused-styles
@@ -71,9 +72,15 @@ TextFieldInline.propTypes = {
 	value: PropTypes.string.isRequired,
 	type: PropTypes.string,
 	style: PropTypes.string,
+	color: PropTypes.string,
+	fontSize: PropTypes.number,
 };
 
-TextFieldInline.defaultProps = { type: 'main' };
+TextFieldInline.defaultProps = {
+	type: 'main',
+	color: 'white',
+	fontSize: null,
+};
 
 TextFieldInline.type = {
 	title: 'title',
