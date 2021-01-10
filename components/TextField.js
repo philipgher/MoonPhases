@@ -8,7 +8,7 @@ import {
 	Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 
-const TextField = ({ title, icon, value, style, ...props }) => {
+const TextField = ({ title, icon, iconBeforeText, value, style, ...props }) => {
 	const [isFontsLoaded] = useFonts({
 		Poppins_300Light,
 		Poppins_500Medium,
@@ -35,9 +35,17 @@ const TextField = ({ title, icon, value, style, ...props }) => {
 					{title}
 				</Text>
 			</View>
-			<Text style={[styles.text, styles.value, { fontFamily: 'Poppins_300Light' }]}>
-				{value}
-			</Text>
+			<View style={styles.valueContainer}>
+				{iconBeforeText && (
+					<Image
+						source={iconBeforeText}
+						style={styles.iconBeforeText}
+					/>
+				)}
+				<Text style={[styles.text, styles.value, { fontFamily: 'Poppins_300Light' }]}>
+					{value}
+				</Text>
+			</View>
 		</View>
 	);
 };
@@ -58,10 +66,20 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 14,
 	},
+	valueContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+	},
 	icon: {
 		width: 14,
 		height: 20,
-		marginRight: 9,
+		marginRight: 8,
+	},
+	iconBeforeText: {
+		width: 15,
+		height: 15,
+		marginRight: 8,
 	},
 	titleContainer: {
 		display: 'flex',
@@ -75,6 +93,7 @@ TextField.propTypes = {
 	title: PropTypes.string.isRequired,
 	value: PropTypes.string,
 	icon: PropTypes.string,
+	iconBeforeText: PropTypes.string,
 	style: PropTypes.any,
 };
 

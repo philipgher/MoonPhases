@@ -10,6 +10,7 @@ import moonRisePNG from '../assets/moonRise.png';
 import moonSetPNG from '../assets/moonSet.png';
 
 import getDayOfNextMoonState from '../utils/getDayOfNextMoonState';
+import getZodiacIcon from '../utils/getZodiacIcon';
 
 const DataContainer = ({
 	activeDay,
@@ -68,6 +69,7 @@ const DataContainer = ({
 				value="?"
 			/> */}
 			<TextField
+				iconBeforeText={getZodiacIcon(moonZodiac)}
 				style={styles.row}
 				title="Moon zodiac"
 				value={moonZodiac}

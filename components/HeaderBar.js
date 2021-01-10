@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import TextFieldInline from './TextFieldInline';
 
-import settingsIcon from '../assets/settings.png';
+import menuIcon from '../assets/menu.png';
 
-const HeaderBar = () => {
+const HeaderBar = ({ navigation }) => {
 	const handlePressSettings = () => {
-		console.log('presseddd');
+		navigation.openDrawer();
 	};
 
 	return (
@@ -16,7 +17,7 @@ const HeaderBar = () => {
 				onPress={handlePressSettings}
 			>
 				<Image
-					source={settingsIcon}
+					source={menuIcon}
 					style={styles.icon}
 				/>
 			</Pressable>
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
 		paddingTop: 11,
 		paddingBottom: 16,
 		paddingLeft: 19,
-		paddingRight: 19,
+		paddingRight: 18,
 	},
 	icon: {
 		width: '100%',
@@ -58,6 +59,6 @@ const styles = StyleSheet.create({
 	},
 });
 
-HeaderBar.propTypes = {};
+HeaderBar.propTypes = { navigation: PropTypes.object.isRequired };
 
 export default HeaderBar;
