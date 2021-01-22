@@ -1726,6 +1726,11 @@ astral-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/astral-regex/-/astral-regex-1.0.0.tgz#6c8c3fb827dd43ee3918f27b82782ab7658a6fd9"
   integrity sha512-+Ryf6g3BKoRc7jfp7ad8tM4TtMiaWvbF/1/sQcZPkkS7ag3D5nMBCe2UfOTONtAkaG0tO0ij3C5Lwmf1EiyjHg==
 
+astronomy-bundle@^5.19.0:
+  version "5.19.0"
+  resolved "https://registry.yarnpkg.com/astronomy-bundle/-/astronomy-bundle-5.19.0.tgz#e5a7bd00c17c3d0a2e45cb7c9cfba55d517e1e1e"
+  integrity sha512-H3TA5zZh/k2f3IFKjrSsAisp/giqtzeIzpPP9Uj8Xd5k0WTKHiTKU8fAbdLsJBHluX481de7VfJ561BuG8kOlg==
+
 async@^2.4.0:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"

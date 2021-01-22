@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, SafeAreaView, ScrollView, Platform, StatusBar } from 'react-native';
 import SunCalc from 'suncalc';
+import { createTimeOfInterest } from 'astronomy-bundle/time';
+import { createMoon } from 'astronomy-bundle/moon';
+import { createSun } from 'astronomy-bundle/sun';
+
 import MoonCalc from 'mooncalc';
 import { DateTime } from 'luxon';
 
@@ -13,17 +17,30 @@ import AdBanner from '../components/AdBanner';
 
 import getMoonPhase from '../utils/getMoonPhase';
 import getLocation from '../utils/getLocation';
+import TodayButton from '../components/TodayButton';
+import twoDigitNum from '../utils/twoDigitNum';
 
 const HomeScreen = ({ navigation }) => {
+	const [initialDay, setInitialDay] = useState(DateTime.local());
 	const [activeDay, setActiveDay] = useState(DateTime.local());
-	const [location, setLocation] = useState();
+	const [location, setLocation] = useState({
+		lat: null,
+		lon: null,
+		errorMessage: null,
+	});
 
 	const [moonTimes, setMoonTimes] = useState({});
 	const [moonIllumination, setMoonIllumutation] = useState(SunCalc.getMoonIllumination(activeDay));
 	const [moonPosition, setMoonPosition] = useState();
 	const [moonPhase, setMoonPhase] = useState(getMoonPhase(moonIllumination));
+	const [nextNewAndFullMoon, setNextNewAndFullMoon] = useState({
+		new: null,
+		full: null,
+	});
 	const [moonZodiac, setMoonZodiac] = useState();
 
+	console.log('activeDay', activeDay);
+	console.log('location', location);
 	console.log('moonTimes', moonTimes);
 	console.log('moonIllumination', moonIllumination);
 	console.log('moonPosition', moonPosition);
@@ -40,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
 
 	// moonTimes, moonPosition and moonZodiac effect
 	useEffect(() => {
-		if (!location) {
+		if (!Object.values(location).some(value => !!value)) {
 			return;
 		}
 
@@ -53,23 +70,32 @@ const HomeScreen = ({ navigation }) => {
 			return;
 		}
 
+		// Convert Luxon DateTime to vanilla Date
 		const plainJSActiveDay = new Date(activeDay.toISO());
 
-		setMoonZodiac(MoonCalc.datasForDay(plainJSActiveDay).constellation);
-		setMoonPosition(SunCalc.getMoonPosition(activeDay, location.latitude, location.longitude));
+		(async () => {
+			const toi = createTimeOfInterest.fromDate(plainJSActiveDay);
+			const moon = createMoon(toi);
 
-		const moonTimesRaw = SunCalc.getMoonTimes(
-			plainJSActiveDay,
-			location.latitude,
-			location.longitude
-		);
+			const toiRise = await moon.getRise(location);
+			const toiSet = await moon.getSet(location);
 
-		console.log('MoonTimesRaw', moonTimesRaw);
+			setMoonTimes({
+				rise: `${twoDigitNum(toiRise.time.hour)}:${twoDigitNum(toiRise.time.min)}`,
+				set: `${twoDigitNum(toiSet.time.hour)}:${twoDigitNum(toiSet.time.min)}`,
+			});
 
-		setMoonTimes({
-			rise: DateTime.fromJSDate(moonTimesRaw.rise).toFormat('HH:MM'),
-			set: DateTime.fromJSDate(moonTimesRaw.set).toFormat('HH:MM'),
-		});
+			const toiNextNew = moon.getUpcomingNewMoon();
+			const toiNextFull = moon.getUpcomingFullMoon();
+
+			setNextNewAndFullMoon({
+				new: `${twoDigitNum(toiNextNew.time.day)}/${twoDigitNum(toiNextNew.time.month)}/${toiNextNew.time.year}`,
+				full: `${twoDigitNum(toiNextFull.time.day)}/${twoDigitNum(toiNextFull.time.month)}/${twoDigitNum(toiNextFull.time.year)}`,
+			});
+
+			setMoonZodiac(MoonCalc.datasForDay(plainJSActiveDay).constellation);
+			setMoonPosition(SunCalc.getMoonPosition(activeDay, location.latitude, location.longitude));
+		})();
 	}, [location, activeDay]);
 
 	// location effect
@@ -94,6 +120,12 @@ const HomeScreen = ({ navigation }) => {
 						moonPhase={moonPhase}
 						setActiveDay={setActiveDay}
 					/>
+					{activeDay.toMillis() !== initialDay.toMillis() && (
+						<TodayButton
+							setActiveDay={setActiveDay}
+							setInitialDay={setInitialDay}
+						/>
+					)}
 					<Moon
 						moonIllumination={moonIllumination}
 						moonPosition={moonPosition}
@@ -104,6 +136,7 @@ const HomeScreen = ({ navigation }) => {
 						moonPosition={moonPosition}
 						moonTimes={moonTimes}
 						moonZodiac={moonZodiac}
+						nextNewAndFullMoon={nextNewAndFullMoon}
 					/>
 				</ScrollView>
 				<AdBanner />

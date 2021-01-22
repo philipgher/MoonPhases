@@ -18,6 +18,7 @@ const DataContainer = ({
 	moonPosition,
 	moonZodiac,
 	moonIllumination,
+	nextNewAndFullMoon,
 }) => {
 	const nextNewMoon = getDayOfNextMoonState(activeDay, 'New Moon');
 	const nextFullMoon = getDayOfNextMoonState(activeDay, 'Full Moon');
@@ -29,22 +30,14 @@ const DataContainer = ({
 					<TextFieldInline value="Next new moon" />
 					<TextFieldInline
 						type={TextFieldInline.type.sub}
-						value={nextNewMoon?.toLocaleString({
-							year: 'numeric',
-							month: 'long',
-							day: 'numeric',
-						})}
+						value={nextNewAndFullMoon.new}
 					/>
 				</View>
 				<View style={[styles.left, styles.rowChild]}>
 					<TextFieldInline value="Next full moon" />
 					<TextFieldInline
 						type={TextFieldInline.type.sub}
-						value={nextFullMoon?.toLocaleString({
-							year: 'numeric',
-							month: 'long',
-							day: 'numeric',
-						})}
+						value={nextNewAndFullMoon.full}
 					/>
 				</View>
 			</View>
@@ -130,6 +123,10 @@ DataContainer.propTypes = {
 		distance: PropTypes.number.isRequired,
 		parallacticAngle: PropTypes.number.isRequired,
 	}),
+	nextNewAndFullMoon: PropTypes.shape({
+		new: PropTypes.string,
+		full: PropTypes.string,
+	}).isRequired,
 };
 
 export default DataContainer;

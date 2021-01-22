@@ -12,8 +12,8 @@ const getLocationAsync = async () => {
 	const { latitude, longitude } = location.coords;
 
 	return {
-		latitude,
-		longitude,
+		lat: latitude,
+		lon: longitude,
 	};
 
 };
