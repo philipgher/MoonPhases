@@ -1,6 +1,3 @@
-const twoDigitNum = (string) => string.toLocaleString('en-US', {
-	minimumIntegerDigits: 2,
-	useGrouping: false,
-});
+const twoDigitNum = (string) => (`${string}`).padStart(2, '0');
 
 export default twoDigitNum;

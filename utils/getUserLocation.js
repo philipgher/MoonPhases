@@ -1,7 +1,7 @@
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
-const getLocationAsync = async () => {
+const getUserLocation = async () => {
 	let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
 	if (status !== 'granted') {
@@ -18,4 +18,4 @@ const getLocationAsync = async () => {
 
 };
 
-export default getLocationAsync;
+export default getUserLocation;

@@ -6,7 +6,7 @@ import { remap } from '@anselan/maprange';
 
 import moon from '../assets/moon.png';
 
-const Moon = ({ moonIllumination, moonPosition }) => {
+const Moon = ({ moonDistance, moonIlluminatedFraction, moonAngle }) => {
 	// https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
 	// Move to: M x y
 	// Bézier curve: C x1 y1, x2 y2, x y || c dx1 dy1, dx2 dy2, dx dy
@@ -14,7 +14,9 @@ const Moon = ({ moonIllumination, moonPosition }) => {
 	// Quadratic curve: Q x1 y1, x y || q dx1 dy1, dx dy
 	// Stringing together multiple quadratic Béziers: T x y || t dx dy
 
-	const visiblePartX = 200 - remap(moonIllumination.fraction, [0, 1], [0, 200]);
+	console.log(moonAngle);
+
+	const visiblePartX = 200 - remap(moonIlluminatedFraction, [0, 1], [0, 200]);
 	// const visiblePartX = 200;
 	const bezierToCircleDeviator = 48;
 	const yDeviator = 11;
@@ -30,8 +32,8 @@ const Moon = ({ moonIllumination, moonPosition }) => {
 					styles.moonContainer,
 					{
 						transform: [
-							{ scale: moonPosition ? remap(moonPosition.distance, [363104, 405696], [0.9, 1.1]) : 1 },
-							{ rotate: moonPosition ? `${(moonPosition.parallacticAngle * 180 / Math.PI)}deg` : '0deg' },
+							{ scale: moonAngle ? remap(moonDistance, [363300, 405500], [0.9, 1.1]) : 1 },
+							{ rotate: moonAngle ? `${moonAngle}deg` : '0deg' },
 						],
 					},
 				]}
@@ -91,16 +93,9 @@ const styles = StyleSheet.create({
 });
 
 Moon.propTypes = {
-	moonIllumination: PropTypes.shape({
-		angle: PropTypes.number.isRequired,
-		fraction: PropTypes.number.isRequired,
-		phase: PropTypes.number.isRequired,
-	}),
-	moonPosition: PropTypes.shape({
-		altitude: PropTypes.number.isRequired,
-		distance: PropTypes.number.isRequired,
-		parallacticAngle: PropTypes.number.isRequired,
-	}),
+	moonAngle: PropTypes.number,
+	moonDistance: PropTypes.number,
+	moonIlluminatedFraction: PropTypes.number,
 };
 
 export default Moon;

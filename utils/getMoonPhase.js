@@ -41,8 +41,8 @@ export const MOON_PHASES = [
 	},
 ];
 
-const getMoonPhase = (moonIllumination) => (
-	MOON_PHASES.find(phase => phase.min < moonIllumination.phase && phase.max > moonIllumination.phase)
+const getMoonPhase = (moonIlluminatedFraction) => (
+	MOON_PHASES.find(phase => phase.min < moonIlluminatedFraction && phase.max > moonIlluminatedFraction).name
 );
 
 export default getMoonPhase;

@@ -14,14 +14,13 @@ import getZodiacIcon from '../utils/getZodiacIcon';
 
 const DataContainer = ({
 	activeDay,
+	moonDistance,
 	moonTimes,
-	moonPosition,
 	moonZodiac,
-	moonIllumination,
 	nextNewAndFullMoon,
 }) => {
-	const nextNewMoon = getDayOfNextMoonState(activeDay, 'New Moon');
-	const nextFullMoon = getDayOfNextMoonState(activeDay, 'Full Moon');
+	// const nextNewMoon = getDayOfNextMoonState(activeDay, 'New Moon');
+	// const nextFullMoon = getDayOfNextMoonState(activeDay, 'Full Moon');
 
 	return (
 		<View style={styles.dataContainer}>
@@ -70,17 +69,7 @@ const DataContainer = ({
 			<TextField
 				style={styles.row}
 				title="Distance"
-				value={moonPosition ? `${moonPosition.distance.toFixed(0)} km` : ''}
-			/>
-			<TextField
-				style={styles.row}
-				title="Parallactic angle"
-				value={moonPosition ? `${(moonPosition.parallacticAngle * 180 / Math.PI).toFixed(1)}°` : ''}
-			/>
-			<TextField
-				style={styles.row}
-				title="Altitude"
-				value={moonPosition ? `${(moonPosition.altitude * 180 / Math.PI).toFixed(1)}°` : ''}
+				value={moonDistance ? `${moonDistance.toFixed(0)} km` : ''}
 			/>
 			<View style={styles.spacer} />
 		</View>
@@ -113,16 +102,12 @@ const styles = StyleSheet.create({
 
 DataContainer.propTypes = {
 	activeDay: PropTypes.instanceOf(DateTime),
+	moonDistance: PropTypes.number,
 	moonTimes: PropTypes.shape({
 		rise: PropTypes.string,
 		set: PropTypes.string,
 	}).isRequired,
 	moonZodiac: PropTypes.string,
-	moonPosition: PropTypes.shape({
-		altitude: PropTypes.number.isRequired,
-		distance: PropTypes.number.isRequired,
-		parallacticAngle: PropTypes.number.isRequired,
-	}),
 	nextNewAndFullMoon: PropTypes.shape({
 		new: PropTypes.string,
 		full: PropTypes.string,

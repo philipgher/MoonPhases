@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Animated, Pressable, StyleSheet } from 'react-native';
 import TextFieldInline from './TextFieldInline';
 import { DateTime } from 'luxon';
 
-const TodayButton = ({ setActiveDay, setInitialDay }) => {
+const TodayButton = ({ setActiveDay, initialDay, setInitialDay }) => {
 	const fadeAnim = useRef(new Animated.Value(0)); // Initial value for opacity: 0
 
 	// useEffect(() => {
@@ -18,14 +18,12 @@ const TodayButton = ({ setActiveDay, setInitialDay }) => {
 	// }, [fadeAnim]);
 
 	const handlePressToday = () => {
-		const now = DateTime.local();
-		setActiveDay(now);
-		setInitialDay(now);
+		setActiveDay(initialDay);
 	};
 
 	return (
 		<Pressable
-			style={[styles.container, { opacity: fadeAnim.current }]}
+			style={styles.container}
 			onPress={handlePressToday}
 		>
 			<TextFieldInline value="Today" />
@@ -45,6 +43,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 5,
 		paddingLeft: 12,
 		paddingRight: 12,
+		zIndex: 2,
 	},
 });
 

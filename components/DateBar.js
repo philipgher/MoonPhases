@@ -8,7 +8,13 @@ import { remap } from '@anselan/maprange';
 
 import arrow from '../assets/arrow.png';
 
-const DateBar = ({ activeDay, setActiveDay, moonPhase, moonIllumination }) => {
+const DateBar = ({
+	activeDay,
+	hasFoundLocation,
+	setActiveDay,
+	moonPhase,
+	moonIlluminatedFraction,
+}) => {
 	const handleClickYesterday = () => {
 		setActiveDay(activeDay.minus({
 			days: 1,
@@ -47,10 +53,17 @@ const DateBar = ({ activeDay, setActiveDay, moonPhase, moonIllumination }) => {
 						day: 'numeric',
 					})}
 				/>
-				<TextFieldInline
-					type={TextFieldInline.type.main}
-					value={`${moonPhase.name} ${remap(moonIllumination.fraction, [0, 1], [0, 100], true, true)}%`}
-				/>
+				{hasFoundLocation ? (
+					<TextFieldInline
+						type={TextFieldInline.type.main}
+						value={`${moonPhase} ${remap(moonIlluminatedFraction, [0, 1], [0, 100], true, true)}%`}
+					/>
+				) : (
+					<TextFieldInline
+						type={TextFieldInline.type.main}
+						value={''}
+					/>
+				)}
 			</View>
 			<Pressable
 				style={[styles.arrowContainer, styles.arrowContainerRight]}
@@ -93,8 +106,8 @@ const styles = StyleSheet.create({
 DateBar.propTypes = {
 	activeDay: PropTypes.instanceOf(DateTime).isRequired,
 	setActiveDay: PropTypes.func.isRequired,
-	moonPhase: PropTypes.shape({ name: PropTypes.string }).isRequired,
-	moonIllumination: PropTypes.shape({ fraction: PropTypes.number }),
+	moonPhase: PropTypes.string,
+	moonIlluminatedFraction: PropTypes.number,
 };
 
 export default DateBar;
