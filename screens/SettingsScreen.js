@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, SafeAreaView, ScrollView, Platform, StatusBar } from 'react-native';
+import { StyleSheet, View, SafeAreaView, ScrollView, Platform, StatusBar, Pressable } from 'react-native';
 
 import HeaderBar from '../components/HeaderBar';
 import AdBanner from '../components/AdBanner';
 import TextFieldInline from '../components/TextFieldInline';
 
 const SettingsScreen = ({ navigation }) => {
+	const handleTouchMetric = () => {
+		console.log('Metric');
+	};
+
+	const handleTouchImperial = () => {
+		console.log('Imperial');
+	};
+
 	return (
 		<View style={styles.background}>
 			<StatusBar
@@ -21,6 +29,32 @@ const SettingsScreen = ({ navigation }) => {
 							textAlign="left"
 							value="Units"
 						/>
+						<View style={styles.radioLine}>
+							<Pressable
+								style={styles.radioOuter}
+								onTouchEnd={handleTouchMetric}
+							>
+								<View style={styles.radioInner} />
+							</Pressable>
+							<TextFieldInline
+								textAlign="left"
+								type={TextFieldInline.type.sub}
+								value="Metric"
+							/>
+						</View>
+						<View style={styles.radioLine}>
+							<Pressable
+								style={styles.radioOuter}
+								onTouchEnd={handleTouchImperial}
+							>
+								{/* <View style={styles.radioInner} /> */}
+							</Pressable>
+							<TextFieldInline
+								textAlign="left"
+								type={TextFieldInline.type.sub}
+								value="Imperial"
+							/>
+						</View>
 					</View>
 				</ScrollView>
 				<AdBanner />
@@ -55,7 +89,31 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		top: 10,
 		paddingLeft: 20,
-		height: 100,
+		height: 200,
+	},
+	radioLine: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingTop: 5,
+		paddingBottom: 5,
+	},
+	radioOuter: {
+		marginRight: 10,
+		width: 30,
+		height: 30,
+		borderRadius: 15,
+		borderColor: 'white',
+		borderWidth: 1,
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	radioInner: {
+		width: 17,
+		height: 17,
+		borderRadius: 15,
+		backgroundColor: 'white',
 	},
 });
 

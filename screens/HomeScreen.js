@@ -52,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
 	}, []);
 
 	useEffect(() => {
-		if (!Object.values(userLocation).some(value => !!value)) {
+		if (!hasFoundLocation) {
 			return;
 		}
 
