@@ -26,14 +26,14 @@ const DataContainer = ({
 		<View style={styles.dataContainer}>
 			<View style={[styles.row, styles.rowContainer, styles.rowGap]}>
 				<View style={[styles.left, styles.rowChild]}>
-					<TextFieldInline value="Next new moon" />
+					<TextFieldInline value="New moon" />
 					<TextFieldInline
 						type={TextFieldInline.type.sub}
 						value={nextNewAndFullMoon.new}
 					/>
 				</View>
 				<View style={[styles.left, styles.rowChild]}>
-					<TextFieldInline value="Next full moon" />
+					<TextFieldInline value="Full moon" />
 					<TextFieldInline
 						type={TextFieldInline.type.sub}
 						value={nextNewAndFullMoon.full}

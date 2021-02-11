@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, View, SafeAreaView, ScrollView, Platform, StatusBar } from 'react-native';
 
 import HeaderBar from '../components/HeaderBar';
 import AdBanner from '../components/AdBanner';
+import TextFieldInline from '../components/TextFieldInline';
 
 const SettingsScreen = ({ navigation }) => {
 	return (
@@ -14,6 +16,12 @@ const SettingsScreen = ({ navigation }) => {
 			<SafeAreaView style={styles.container}>
 				<ScrollView style={styles.scrollContainer}>
 					<HeaderBar navigation={navigation} />
+					<View style={styles.textWrapper}>
+						<TextFieldInline
+							textAlign="left"
+							value="Units"
+						/>
+					</View>
 				</ScrollView>
 				<AdBanner />
 			</SafeAreaView>
@@ -43,6 +51,14 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '95%',
 	},
+	textWrapper: {
+		position: 'relative',
+		top: 10,
+		paddingLeft: 20,
+		height: 100,
+	},
 });
+
+SettingsScreen.propTypes = { navigation: PropTypes.object.isRequired };
 
 export default SettingsScreen;

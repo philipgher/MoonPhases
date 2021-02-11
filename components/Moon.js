@@ -14,15 +14,13 @@ const Moon = ({ moonDistance, moonIlluminatedFraction, moonAngle }) => {
 	// Quadratic curve: Q x1 y1, x y || q dx1 dy1, dx dy
 	// Stringing together multiple quadratic Béziers: T x y || t dx dy
 
-	console.log(moonAngle);
-
 	const visiblePartX = 200 - remap(moonIlluminatedFraction, [0, 1], [0, 200]);
 	// const visiblePartX = 200;
 	const bezierToCircleDeviator = 48;
 	const yDeviator = 11;
 
 	let topBottomPuller = visiblePartX >= 100
-		? remap(visiblePartX, [100, 200], [100, 155])
+		? remap(visiblePartX, [100, 200], [100, 160])
 		: remap(visiblePartX, [0, 100], [0, 100]);
 
 	return (

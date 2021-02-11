@@ -8,7 +8,7 @@ import {
 	Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 
-const TextFieldInline = ({ value, type, style, color, fontSize, ...props }) => {
+const TextFieldInline = ({ value, type, style, color, fontSize, textAlign, textDecorationLine, ...props }) => {
 	const [isFontsLoaded] = useFonts({
 		Poppins_300Light,
 		Poppins_500Medium,
@@ -48,6 +48,8 @@ const TextFieldInline = ({ value, type, style, color, fontSize, ...props }) => {
 						fontFamily,
 						color,
 						[fontSize && 'fontSize']: fontSize,
+						[textAlign && 'textAlign']: textAlign,
+						[textDecorationLine && 'textDecorationLine']: textDecorationLine,
 					},
 				]}
 			>
@@ -73,6 +75,8 @@ TextFieldInline.propTypes = {
 	type: PropTypes.string,
 	style: PropTypes.string,
 	color: PropTypes.string,
+	textDecorationLine: PropTypes.string,
+	textAlign: PropTypes.string,
 	fontSize: PropTypes.number,
 };
 

@@ -84,12 +84,20 @@ const HomeScreen = ({ navigation }) => {
 			const toiNextFull = moon.getUpcomingFullMoon();
 
 			setNextNewAndFullMoon({
-				new: `${twoDigitNum(toiNextNew.time.day)} - ${twoDigitNum(toiNextNew.time.month)} - ${toiNextNew.time.year}`,
-				full: `${twoDigitNum(toiNextFull.time.day)} - ${twoDigitNum(toiNextFull.time.month)} - ${twoDigitNum(toiNextFull.time.year)}`,
+				new: `${DateTime.fromObject({
+					day: toiNextNew.time.day,
+					month: toiNextNew.time.month,
+					year: toiNextNew.time.year,
+				}).toFormat('dd LLLL yyyy')}`,
+				full: `${DateTime.fromObject({
+					day: toiNextFull.time.day,
+					month: toiNextFull.time.month,
+					year: toiNextFull.time.year,
+				}).toFormat('dd LLLL yyyy')}`,
 			});
 
-			// Elongation is the angle between the Earth, Sun and Moon. Relates to the current phase
-			setMoonPhase(getMoonPhase(await moon.getElongation() / 360)); // NOT A PROPER SOLUTION
+			// Phase is human readable name of current state in moon cycle
+			setMoonPhase(await getMoonPhase(moon));
 
 			// The amount of visible moon (lit)
 			setMoonIlluminatedFraction(await moon.getIlluminatedFraction());
@@ -101,7 +109,6 @@ const HomeScreen = ({ navigation }) => {
 			setMoonZodiac(MoonCalc.datasForDay(plainJSActiveDay).constellation);
 
 			// Moon angle is the angle from the middle to the centre of the bright side
-			// setMoonAngle(await moon.getTopocentricPositionAngleOfBrightLimb(userLocation) - 45);
 			setMoonAngle(await moon.getTopocentricPhaseAngle(userLocation));
 		})();
 	}, [userLocation, activeDay]);
