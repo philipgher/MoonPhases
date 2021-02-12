@@ -1,7 +1,9 @@
-import React, { } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+
+import { getValue, setValue } from './utils/storageUtils';
 
 import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
@@ -19,27 +21,69 @@ const MyTheme = {
 	},
 };
 
-const App = () => {
+export const StoreContext = React.createContext();
+
+const StoreProvider = ({ children }) => {
+	const [state, setState] = useState({ measurementUnit: '' });
+
+	useEffect(() => {
+		(async () => {
+			const measurementUnitLocal = await getValue('measurementUnit');
+
+			if (measurementUnitLocal) {
+				setState({
+					...state,
+					measurementUnit: measurementUnitLocal,
+				});
+
+				return;
+			}
+
+			console.log('setting measurementUnit state');
+			setState({
+				...state,
+				measurementUnit: 'metric',
+			});
+		})();
+	}, []);
+
+	useEffect(() => {
+		console.log('setting measurementUnit async storage');
+		(async () => {
+			await setValue('measurementUnit', state.measurementUnit);
+		});
+	}, [state.measurementUnit]);
+
 	return (
-		<NavigationContainer theme={MyTheme}>
-			<Drawer.Navigator initialRouteName="Home">
-				<Drawer.Screen
-					component={HomeScreen}
-					name="Home"
-				/>
-				<Drawer.Screen
-					component={SettingsScreen}
-					name="Settings"
-				/>
-				<Drawer.Screen
-					component={ContactScreen}
-					name="Contact"
-				/>
-			</Drawer.Navigator>
-		</NavigationContainer>
+		<StoreContext.Provider value={[state, setState]}>
+			{children}
+		</StoreContext.Provider>
 	);
 };
 
-const styles = StyleSheet.create({});
+StoreProvider.propTypes = { children: PropTypes.node.isRequired };
+
+const App = () => {
+	return (
+		<StoreProvider>
+			<NavigationContainer theme={MyTheme}>
+				<Drawer.Navigator initialRouteName="Home">
+					<Drawer.Screen
+						component={HomeScreen}
+						name="Home"
+					/>
+					<Drawer.Screen
+						component={SettingsScreen}
+						name="Settings"
+					/>
+					<Drawer.Screen
+						component={ContactScreen}
+						name="Contact"
+					/>
+				</Drawer.Navigator>
+			</NavigationContainer>
+		</StoreProvider>
+	);
+};
 
 export default App;

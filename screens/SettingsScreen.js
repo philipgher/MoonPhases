@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, SafeAreaView, ScrollView, Platform, StatusBar, Pressable } from 'react-native';
 
+import { StoreContext } from '../App';
 import HeaderBar from '../components/HeaderBar';
 import AdBanner from '../components/AdBanner';
 import TextFieldInline from '../components/TextFieldInline';
 
 const SettingsScreen = ({ navigation }) => {
+	const [{ measurementUnit }, setState] = useContext(StoreContext);
+
 	const handleTouchMetric = () => {
-		console.log('Metric');
+		setState((state) => ({
+			...state,
+			measurementUnit: 'metric',
+		}));
 	};
 
 	const handleTouchImperial = () => {
-		console.log('Imperial');
+		setState((state) => ({
+			...state,
+			measurementUnit: 'imperial',
+		}));
 	};
 
 	return (
@@ -34,7 +43,9 @@ const SettingsScreen = ({ navigation }) => {
 								style={styles.radioOuter}
 								onTouchEnd={handleTouchMetric}
 							>
-								<View style={styles.radioInner} />
+								{measurementUnit === 'metric' && (
+									<View style={styles.radioInner} />
+								)}
 							</Pressable>
 							<TextFieldInline
 								textAlign="left"
@@ -47,7 +58,9 @@ const SettingsScreen = ({ navigation }) => {
 								style={styles.radioOuter}
 								onTouchEnd={handleTouchImperial}
 							>
-								{/* <View style={styles.radioInner} /> */}
+								{measurementUnit === 'imperial' && (
+									<View style={styles.radioInner} />
+								)}
 							</Pressable>
 							<TextFieldInline
 								textAlign="left"

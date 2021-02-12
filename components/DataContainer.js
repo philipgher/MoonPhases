@@ -1,26 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
-import { DateTime } from 'luxon';
 
+import { StoreContext } from '../App';
 import TextField from './TextField';
 import TextFieldInline from './TextFieldInline';
 
 import moonRisePNG from '../assets/moonRise.png';
 import moonSetPNG from '../assets/moonSet.png';
 
-import getDayOfNextMoonState from '../utils/getDayOfNextMoonState';
 import getZodiacIcon from '../utils/getZodiacIcon';
 
 const DataContainer = ({
-	activeDay,
 	moonDistance,
 	moonTimes,
 	moonZodiac,
 	nextNewAndFullMoon,
 }) => {
-	// const nextNewMoon = getDayOfNextMoonState(activeDay, 'New Moon');
-	// const nextFullMoon = getDayOfNextMoonState(activeDay, 'Full Moon');
+	const [{ measurementUnit }] = useContext(StoreContext);
+
+	const moonDistanceInRightUnits = moonDistance &&
+		measurementUnit === 'metric'
+		? `${moonDistance.toFixed(0)} km`
+		: `${(moonDistance * 0.621).toFixed(0)} mi`;
 
 	return (
 		<View style={styles.dataContainer}>
@@ -69,7 +71,7 @@ const DataContainer = ({
 			<TextField
 				style={styles.row}
 				title="Distance"
-				value={moonDistance ? `${moonDistance.toFixed(0)} km` : ''}
+				value={moonDistanceInRightUnits}
 			/>
 			<View style={styles.spacer} />
 		</View>
@@ -101,7 +103,6 @@ const styles = StyleSheet.create({
 });
 
 DataContainer.propTypes = {
-	activeDay: PropTypes.instanceOf(DateTime),
 	moonDistance: PropTypes.number,
 	moonTimes: PropTypes.shape({
 		rise: PropTypes.string,
