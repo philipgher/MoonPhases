@@ -1,22 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Animated, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import TextFieldInline from './TextFieldInline';
 import { DateTime } from 'luxon';
 
-const TodayButton = ({ setActiveDay, initialDay, setInitialDay }) => {
-	const fadeAnim = useRef(new Animated.Value(0)); // Initial value for opacity: 0
-
-	// useEffect(() => {
-	// 	Animated.timing(
-	// 		fadeAnim,
-	// 		{
-	// 			toValue: 1,
-	// 			duration: 10000,
-	// 		}
-	// 	).start();
-	// }, [fadeAnim]);
-
+const TodayButton = ({ setActiveDay, initialDay }) => {
 	const handlePressToday = () => {
 		setActiveDay(initialDay);
 	};
@@ -48,8 +36,8 @@ const styles = StyleSheet.create({
 });
 
 TodayButton.propTypes = {
+	initialDay: PropTypes.instanceOf(DateTime).isRequired,
 	setActiveDay: PropTypes.func.isRequired,
-	setInitialDay: PropTypes.func.isRequired,
 };
 
 export default TodayButton;

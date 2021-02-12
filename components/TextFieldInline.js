@@ -38,18 +38,20 @@ const TextFieldInline = ({ value, type, style, color, fontSize, textAlign, textD
 	return (
 		<View
 			{...props}
-			style={[style, styles.container]}
+			style={[
+				style,
+				styles.container,
+			]}
 		>
 			<Text
 				style={[
-					styles.text,
-					styles[type],
+					styles[type] && !fontSize,
 					{
 						fontFamily,
 						color,
-						[fontSize && 'fontSize']: fontSize,
-						[textAlign && 'textAlign']: textAlign,
-						[textDecorationLine && 'textDecorationLine']: textDecorationLine,
+						...(fontSize && 'fontSize' && { fontSize: fontSize }),
+						...(textAlign && 'textAlign' && { textAlign: textAlign }),
+						...(textDecorationLine && 'textDecorationLine' && { textDecorationLine: textDecorationLine }),
 					},
 				]}
 			>
@@ -61,7 +63,6 @@ const TextFieldInline = ({ value, type, style, color, fontSize, textAlign, textD
 
 const styles = StyleSheet.create({
 	container: {},
-	text: { textAlign: 'center' },
 	// eslint-disable-next-line react-native/no-unused-styles
 	title: { fontSize: 21 },
 	// eslint-disable-next-line react-native/no-unused-styles
@@ -71,9 +72,9 @@ const styles = StyleSheet.create({
 });
 
 TextFieldInline.propTypes = {
-	value: PropTypes.string.isRequired,
+	value: PropTypes.string,
 	type: PropTypes.string,
-	style: PropTypes.string,
+	style: PropTypes.object,
 	color: PropTypes.string,
 	textDecorationLine: PropTypes.string,
 	textAlign: PropTypes.string,
@@ -83,7 +84,8 @@ TextFieldInline.propTypes = {
 TextFieldInline.defaultProps = {
 	type: 'main',
 	color: 'white',
-	fontSize: null,
+	textAlign: 'center',
+	value: '',
 };
 
 TextFieldInline.type = {
