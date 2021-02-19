@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "MoonPhases",
-    "slug": "MoonPhases",
+    "name": "DailyMoon",
+    "slug": "DailyMoon",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#191D40"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,22 +17,28 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-6763306576753352~6474422168"
-      }
+      },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to determine the moon visibility."
+      },
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#191D40"
       },
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-6763306576753352~3820338663"
-      }
+      },
+      "versionCode": 1,
+      "package": "com.appstraat.dailymoon"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
     }
   }
 }
