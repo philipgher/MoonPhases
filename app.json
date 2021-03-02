@@ -22,9 +22,10 @@
         "googleMobileAdsAppId": "ca-app-pub-6763306576753352~6474422168"
       },
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "This app uses your location to determine the moon visibility."
+        "NSLocationWhenInUseUsageDescription": "This app uses requires your location only when opening the app. Used to determine the moon visibility and dates."
       },
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.0",
+      "bundleIdentifier": "com.appstraat.dailymoon"
     },
     "android": {
       "adaptiveIcon": {
@@ -34,6 +35,11 @@
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-6763306576753352~3820338663"
       },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "FOREGROUND_SERVICE"
+      ],
       "versionCode": 1,
       "package": "com.appstraat.dailymoon"
     },
