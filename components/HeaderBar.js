@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
-import TextFieldInline from './TextFieldInline';
 
 import menuIcon from '../assets/menu.png';
+import logo from '../assets/logo.png';
 
 const HeaderBar = ({ navigation }) => {
 	const handlePressSettings = () => {
@@ -21,12 +21,12 @@ const HeaderBar = ({ navigation }) => {
 					style={styles.icon}
 				/>
 			</Pressable>
-			<TextFieldInline
-				fontSize={20}
-				style={styles.center}
-				type={TextFieldInline.type.sub}
-				value="DailyMoon"
-			/>
+			<View style={styles.center}>
+				<Image
+					source={logo}
+					style={styles.logo}
+				/>
+			</View>
 		</View>
 	);
 };
@@ -44,6 +44,13 @@ const styles = StyleSheet.create({
 		left: '15%',
 		width: '70%',
 		textAlign: 'center',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	logo: {
+		height: 23,
+		width: 115,
 	},
 	iconContainer: {
 		width: 60,
