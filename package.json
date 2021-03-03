@@ -9,6 +9,8 @@
     "build-ios": "expo build:ios",
     "build-android": "expo build:android -t app-bundle",
     "build-android-apk": "expo build:android -t apk",
+    "upload-ios": "expo upload:ios",
+    "upload-android": "expo upload:android --use-submission-service",
     "eject": "expo eject"
   },
   "dependencies": {
