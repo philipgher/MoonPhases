@@ -47,11 +47,7 @@ const DateBar = ({
 			<View style={styles.dateContainer}>
 				<TextFieldInline
 					type={TextFieldInline.type.title}
-					value={activeDay.toLocaleString({
-						year: 'numeric',
-						month: 'long',
-						day: 'numeric',
-					})}
+					value={activeDay.toFormat('d LLLL yyyy')}
 				/>
 				{hasFoundLocation ? (
 					<TextFieldInline

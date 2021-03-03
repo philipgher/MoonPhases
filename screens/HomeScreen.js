@@ -88,12 +88,12 @@ const HomeScreen = ({ navigation }) => {
 					day: toiNextNew.time.day,
 					month: toiNextNew.time.month,
 					year: toiNextNew.time.year,
-				}).toFormat('dd LLLL yyyy')}`,
+				}).toFormat('d LLLL yyyy')}`,
 				full: `${DateTime.fromObject({
 					day: toiNextFull.time.day,
 					month: toiNextFull.time.month,
 					year: toiNextFull.time.year,
-				}).toFormat('dd LLLL yyyy')}`,
+				}).toFormat('d LLLL yyyy')}`,
 			});
 
 			// Phase is human readable name of current state in moon cycle

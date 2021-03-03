@@ -57,11 +57,6 @@ const DataContainer = ({
 					value={moonTimes.set}
 				/>
 			</View>
-			{/* <TextField
-				style={styles.row}
-				title="Lunar eclipse"
-				value="?"
-			/> */}
 			<TextField
 				iconBeforeText={getZodiacIcon(moonZodiac)}
 				style={styles.row}
