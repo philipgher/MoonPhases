@@ -38,7 +38,7 @@ const ContactScreen = ({ navigation }) => {
 									textAlign="left"
 									textDecorationLine="underline"
 									type={TextFieldInline.type.sub}
-									value={'dailymoon@gmail.com'}
+									value={'appstraat@gmail.com'}
 								/>
 							</Pressable>
 						</View>
