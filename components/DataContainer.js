@@ -19,10 +19,11 @@ const DataContainer = ({
 }) => {
 	const [{ measurementUnit }] = useContext(StoreContext);
 
-	const moonDistanceInRightUnits = moonDistance &&
+	const moonDistanceInRightUnits = moonDistance ?
 		measurementUnit === 'metric'
-		? `${moonDistance.toFixed(0)} km`
-		: `${(moonDistance * 0.621).toFixed(0)} mi`;
+			? `${moonDistance.toFixed(0)} km`
+			: `${(moonDistance * 0.621).toFixed(0)} mi`
+		: '';
 
 	return (
 		<View style={styles.dataContainer}>
