@@ -24,8 +24,8 @@ const AdBanner = () => {
 	const adUnitID = (() => {
 		if (process.env.NODE_ENV === 'production') {
 			return Platform.select({
-				ios: 'ca-app-pub-6763306576753352/3369924283', // Prod ID iOS
-				android: 'ca-app-pub-6763306576753352/5038229173', // Prod ID Android
+				ios: 'ca-app-pub-7656011280489722/7534640783', // Prod ID iOS
+				android: 'ca-app-pub-7656011280489722/9614009218', // Prod ID Android
 			});
 		}
 

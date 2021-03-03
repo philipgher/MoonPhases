@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": false,
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-6763306576753352~6474422168"
+        "googleMobileAdsAppId": "ca-app-pub-7656011280489722~2473885792"
       },
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses requires your location only when opening the app. Used to determine the moon visibility and dates."
@@ -33,7 +33,7 @@
         "backgroundColor": "#191D40"
       },
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-6763306576753352~3820338663"
+        "googleMobileAdsAppId": "ca-app-pub-7656011280489722~4349788834"
       },
       "permissions": [
         "ACCESS_COARSE_LOCATION",
