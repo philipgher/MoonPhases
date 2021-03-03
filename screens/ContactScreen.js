@@ -4,12 +4,11 @@ import { StyleSheet, View, SafeAreaView, ScrollView, Platform, StatusBar, Pressa
 
 import HeaderBar from '../components/HeaderBar';
 import AdBanner from '../components/AdBanner';
-import TextField from '../components/TextField';
 import TextFieldInline from '../components/TextFieldInline';
 
 const ContactScreen = ({ navigation }) => {
 	const handleOpenEmail = () => {
-		Linking.openURL('mailto:dailymoon@gmail.com');
+		Linking.openURL('mailto:appstraat@gmail.com');
 	};
 
 	return (
