@@ -73,12 +73,23 @@ const HomeScreen = ({ navigation }) => {
 			const toi = createTimeOfInterest.fromDate(plainJSActiveDay);
 			const moon = createMoon(toi);
 
-			const toiRise = await moon.getRise(userLocation);
-			const toiSet = await moon.getSet(userLocation);
+			let moonRise, moonSet;
+
+			try {
+				moonRise = await moon.getRise(userLocation);
+			} catch {} // eslint-disable-line no-empty
+
+			try {
+				moonSet = await moon.getSet(userLocation);
+			} catch {} // eslint-disable-line no-empty
 
 			setMoonTimes({
-				rise: `${twoDigitNum(toiRise.time.hour)}:${twoDigitNum(toiRise.time.min)}`,
-				set: `${twoDigitNum(toiSet.time.hour)}:${twoDigitNum(toiSet.time.min)}`,
+				rise: moonRise
+					? `${twoDigitNum(moonRise.time.hour)}:${twoDigitNum(moonRise.time.min)}`
+					: '-',
+				set: moonSet
+					? `${twoDigitNum(moonSet.time.hour)}:${twoDigitNum(moonSet.time.min)}`
+					: '-',
 			});
 
 			const toiNextNew = moon.getUpcomingNewMoon();
@@ -110,7 +121,7 @@ const HomeScreen = ({ navigation }) => {
 			setMoonZodiac(MoonCalc.datasForDay(plainJSActiveDay).constellation);
 
 			// Moon angle is the angle from the middle to the centre of the bright side
-			setMoonAngle(await moon.getTopocentricPhaseAngle(userLocation));
+			setMoonAngle(await moon.getTopocentricPhaseAngle(userLocation) - 45);
 		})();
 	}, [userLocation, activeDay]);
 
