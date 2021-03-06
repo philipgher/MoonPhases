@@ -39,7 +39,6 @@ const StoreProvider = ({ children }) => {
 				return;
 			}
 
-			console.log('setting measurementUnit state');
 			setState({
 				...state,
 				measurementUnit: 'metric',
@@ -48,7 +47,6 @@ const StoreProvider = ({ children }) => {
 	}, []);
 
 	useEffect(() => {
-		console.log('setting measurementUnit async storage');
 		(async () => {
 			await setValue('measurementUnit', state.measurementUnit);
 		});
