@@ -9,6 +9,7 @@
     "build-ios": "expo build:ios",
     "build-android": "expo build:android -t app-bundle",
     "build-android-apk": "expo build:android -t apk",
+    "increment-minor-version": "node scripts/increment-minor-version.js",
     "upload-ios": "expo upload:ios",
     "upload-android": "expo upload:android --use-submission-service",
     "eject": "expo eject"
