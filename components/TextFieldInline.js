@@ -45,7 +45,7 @@ const TextFieldInline = ({ value, type, style, color, fontSize, textAlign, textD
 		>
 			<Text
 				style={[
-					styles[type] && !fontSize,
+					styles[type],
 					{
 						fontFamily,
 						color,
