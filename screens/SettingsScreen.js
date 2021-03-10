@@ -16,6 +16,8 @@ const SettingsScreen = ({ navigation }) => {
 	const [staticLocationInputField, setStaticLocationInputField] = useState(staticLocation ? cityObjectToString(staticLocation) : null);
 	const [staticLocationHistList, setStaticLocationHintList] = useState([]);
 
+	const visibleHinstList = staticLocationHistList.length < 15 && staticLocationHistList.length > 0 ? staticLocationHistList : [];
+
 	const handleTouchMetric = () => {
 		setState((state) => ({
 			...state,
@@ -51,6 +53,25 @@ const SettingsScreen = ({ navigation }) => {
 		setState((state) => ({
 			...state,
 			staticLocation: city,
+		}));
+	};
+
+	const handleTapSubmit = () => {
+		if (visibleHinstList.length > 0) {
+			setStaticLocationInputField(cityObjectToString(visibleHinstList[0]));
+			setStaticLocationHintList([]);
+
+			setState((state) => ({
+				...state,
+				staticLocation: visibleHinstList[0],
+			}));
+
+			return;
+		}
+
+		setState((state) => ({
+			...state,
+			staticLocation: null,
 		}));
 	};
 
@@ -108,10 +129,10 @@ const SettingsScreen = ({ navigation }) => {
 						<View style={styles.radioLine}>
 							<Switch
 								ios_backgroundColor="#3e3e3e"
-								thumbColor={useDeviceLocation ? '#039dfc' : '#f4f3f4'}
+								thumbColor={useDeviceLocation ? '#ffffff' : '#B4B5C5'}
 								trackColor={{
-									false: '#767577',
-									true: '#81b0ff',
+									false: '#3B3F5D',
+									true: '#3B3F5D',
 								}}
 								value={useDeviceLocation}
 								onValueChange={handleSwitchDeviceLocation}
@@ -123,15 +144,18 @@ const SettingsScreen = ({ navigation }) => {
 								<TextFieldInline
 									style={styles.header}
 									textAlign="left"
-									value="Static location"
+									value="Manual location"
 								/>
 								<TextInput
+									placeholder="Please enter a city name"
+									placeholderTextColor="rgba(255,255,255,0.3)"
 									style={styles.textInputLine}
 									value={staticLocationInputField}
 									onChangeText={handleTypeInput}
+									onSubmitEditing={handleTapSubmit}
 								/>
-								{staticLocationHistList.length < 10 && staticLocationHistList.length > 0 && (
-									staticLocationHistList.map(city => (
+								{visibleHinstList.length > 0 && (
+									visibleHinstList.map(city => (
 										<Pressable
 											key={cityObjectToString(city)}
 											onTouchEnd={() => handleSelectCity(city)}
@@ -180,7 +204,8 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		top: 10,
 		paddingLeft: 20,
-		height: 200,
+		paddingRight: 20,
+		height: 500,
 	},
 	header: { paddingTop: 20 },
 	radioLine: {
@@ -210,7 +235,7 @@ const styles = StyleSheet.create({
 	textInputLine: {
 		padding: 5,
 		borderRadius: 5,
-		width: '80%',
+		width: '100%',
 		borderColor: 'white',
 		borderWidth: 1,
 		color: 'white',
@@ -220,7 +245,7 @@ const styles = StyleSheet.create({
 		marginTop: 2,
 		marginBottom: 1,
 		borderRadius: 5,
-		width: '80%',
+		width: '100%',
 		backgroundColor: 'rgba(255,255,255,0.1)',
 	},
 });

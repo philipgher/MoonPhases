@@ -10,7 +10,6 @@ import arrow from '../assets/arrow.png';
 
 const DateBar = ({
 	activeDay,
-	hasFoundLocation,
 	setActiveDay,
 	moonPhase,
 	moonIlluminatedFraction,
@@ -49,17 +48,10 @@ const DateBar = ({
 					type={TextFieldInline.type.title}
 					value={activeDay.toFormat('d LLLL yyyy')}
 				/>
-				{hasFoundLocation ? (
-					<TextFieldInline
-						type={TextFieldInline.type.main}
-						value={`${moonPhase} ${remap(moonIlluminatedFraction, [0, 1], [0, 100], true, true)}%`}
-					/>
-				) : (
-					<TextFieldInline
-						type={TextFieldInline.type.main}
-						value={''}
-					/>
-				)}
+				<TextFieldInline
+					type={TextFieldInline.type.main}
+					value={`${moonPhase} ${remap(moonIlluminatedFraction, [0, 1], [0, 100], true, true)}%`}
+				/>
 			</View>
 			<Pressable
 				style={[styles.arrowContainer, styles.arrowContainerRight]}

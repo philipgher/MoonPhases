@@ -13,11 +13,11 @@ const STORE = [
 	},
 	{
 		key: 'useDeviceLocation',
-		defaultValue: true,
+		defaultValue: null,
 	},
 	{
 		key: 'staticLocation',
-		defaultValue: '',
+		defaultValue: null,
 	},
 ];
 
@@ -39,8 +39,6 @@ const StoreProvider = ({ children }) => {
 	}, []);
 
 	useEffect(() => {
-		console.log('new state');
-
 		STORE.forEach(entry => {
 			setValue(entry.key, state[entry.key]);
 		});
