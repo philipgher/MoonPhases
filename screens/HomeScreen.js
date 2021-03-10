@@ -57,40 +57,12 @@ const HomeScreen = ({ navigation }) => {
 			return;
 		}
 
-		if (userLocation.errorMessage) {
-			setMoonTimes({
-				rise: 'X',
-				set: 'X',
-			});
-
-			return;
-		}
-
 		// Convert Luxon DateTime to vanilla Date
 		const plainJSActiveDay = new Date(activeDay.toISO());
 
 		(async () => {
 			const toi = createTimeOfInterest.fromDate(plainJSActiveDay);
 			const moon = createMoon(toi);
-
-			let moonRise, moonSet;
-
-			try {
-				moonRise = await moon.getRise(userLocation);
-			} catch {} // eslint-disable-line no-empty
-
-			try {
-				moonSet = await moon.getSet(userLocation);
-			} catch {} // eslint-disable-line no-empty
-
-			setMoonTimes({
-				rise: moonRise
-					? `${twoDigitNum(moonRise.time.hour)}:${twoDigitNum(moonRise.time.min)}`
-					: '-',
-				set: moonSet
-					? `${twoDigitNum(moonSet.time.hour)}:${twoDigitNum(moonSet.time.min)}`
-					: '-',
-			});
 
 			const toiNextNew = moon.getUpcomingNewMoon();
 			const toiNextFull = moon.getUpcomingFullMoon();
@@ -119,6 +91,29 @@ const HomeScreen = ({ navigation }) => {
 
 			// Moon zodiac is the constellation, but from the moon
 			setMoonZodiac(MoonCalc.datasForDay(plainJSActiveDay).constellation);
+
+			if (userLocation.errorMessage) {
+				return;
+			}
+
+			let moonRise, moonSet;
+
+			try {
+				moonRise = await moon.getRise(userLocation);
+			} catch {} // eslint-disable-line no-empty
+
+			try {
+				moonSet = await moon.getSet(userLocation);
+			} catch {} // eslint-disable-line no-empty
+
+			setMoonTimes({
+				rise: moonRise
+					? `${twoDigitNum(moonRise.time.hour)}:${twoDigitNum(moonRise.time.min)}`
+					: '-',
+				set: moonSet
+					? `${twoDigitNum(moonSet.time.hour)}:${twoDigitNum(moonSet.time.min)}`
+					: '-',
+			});
 
 			// Moon angle is the angle from the middle to the centre of the bright side
 			setMoonAngle(await moon.getTopocentricPhaseAngle(userLocation) - 45);
@@ -162,7 +157,10 @@ const HomeScreen = ({ navigation }) => {
 						nextNewAndFullMoon={nextNewAndFullMoon}
 					/>
 					{userLocation.errorMessage && (
-						<LocationPermissionDenied errorMessage={userLocation.errorMessage} />
+						<LocationPermissionDenied
+							errorMessage={userLocation.errorMessage}
+							setUserLocation={setUserLocation}
+						/>
 					)}
 				</ScrollView>
 				<AdBanner />

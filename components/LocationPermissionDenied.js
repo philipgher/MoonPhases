@@ -4,9 +4,13 @@ import { Pressable, StyleSheet, View, Linking } from 'react-native';
 
 import TextFieldInline from '../components/TextFieldInline';
 
-const LocationPermissionDenied = ({ errorMessage }) => {
+const LocationPermissionDenied = ({ errorMessage, setUserLocation }) => {
 	const handleTapOpenSettings = () => {
 		Linking.openSettings();
+	};
+
+	const handleTapCloseOverlay = () => {
+		setUserLocation({ errorMessage: null });
 	};
 
 	return (
@@ -20,6 +24,15 @@ const LocationPermissionDenied = ({ errorMessage }) => {
 			>
 				<TextFieldInline
 					value={'Open Settings'}
+				/>
+			</Pressable>
+			<Pressable
+				// style={styles.CTA}
+				onTouchEnd={handleTapCloseOverlay}
+			>
+				<TextFieldInline
+					textDecorationLine="underline"
+					value={'Use static location\n\n'}
 				/>
 			</Pressable>
 			<TextFieldInline
@@ -52,6 +65,9 @@ const styles = StyleSheet.create({
 	},
 });
 
-LocationPermissionDenied.propTypes = { errorMessage: PropTypes.string.isRequired };
+LocationPermissionDenied.propTypes = {
+	errorMessage: PropTypes.string.isRequired,
+	setUserLocation: PropTypes.func.isRequired,
+};
 
 export default LocationPermissionDenied;

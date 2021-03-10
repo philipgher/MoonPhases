@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 
-import { StoreContext } from '../App';
+import { StoreContext } from '../store/Store';
 import TextField from './TextField';
 import TextFieldInline from './TextFieldInline';
 

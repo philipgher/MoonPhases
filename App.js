@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
-import { getValue, setValue } from './utils/storageUtils';
-
+import StoreProvider from './store/Store';
 import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ContactScreen from './screens/ContactScreen';
@@ -20,46 +18,6 @@ const MyTheme = {
 		primary: 'rgb(255,255,255)',
 	},
 };
-
-export const StoreContext = React.createContext();
-
-const StoreProvider = ({ children }) => {
-	const [state, setState] = useState({ measurementUnit: '' });
-
-	useEffect(() => {
-		(async () => {
-			const measurementUnitLocal = await getValue('measurementUnit');
-
-			if (measurementUnitLocal) {
-				setState({
-					...state,
-					measurementUnit: measurementUnitLocal,
-				});
-
-				return;
-			}
-
-			setState({
-				...state,
-				measurementUnit: 'metric',
-			});
-		})();
-	}, []);
-
-	useEffect(() => {
-		(async () => {
-			await setValue('measurementUnit', state.measurementUnit);
-		});
-	}, [state.measurementUnit]);
-
-	return (
-		<StoreContext.Provider value={[state, setState]}>
-			{children}
-		</StoreContext.Provider>
-	);
-};
-
-StoreProvider.propTypes = { children: PropTypes.node.isRequired };
 
 const App = () => {
 	return (
