@@ -2,49 +2,28 @@
   "expo": {
     "name": "DailyMoon",
     "slug": "DailyMoon",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#191D40"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "splash": { "image": "./assets/splash.png", "resizeMode": "cover", "backgroundColor": "#191D40" },
+    "updates": { "fallbackToCacheTimeout": 0 },
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-7656011280489722~2473885792"
-      },
+      "config": { "googleMobileAdsAppId": "ca-app-pub-7656011280489722~2473885792" },
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses requires your location only when opening the app. Used to determine the moon visibility and dates."
       },
-      "buildNumber": "1.0.1",
+      "buildNumber": "1.0.2",
       "bundleIdentifier": "com.appstraat.dailymoon"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#191D40"
-      },
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-7656011280489722~4349788834"
-      },
-      "permissions": [
-        "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION",
-        "FOREGROUND_SERVICE"
-      ],
-      "versionCode": 3,
+      "adaptiveIcon": { "foregroundImage": "./assets/adaptive-icon.png", "backgroundColor": "#191D40" },
+      "config": { "googleMobileAdsAppId": "ca-app-pub-7656011280489722~4349788834" },
+      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "FOREGROUND_SERVICE"],
+      "versionCode": 4,
       "package": "com.appstraat.dailymoon"
     },
-    "web": {
-      "favicon": "./assets/icon.png"
-    }
+    "web": { "favicon": "./assets/icon.png" }
   }
 }
