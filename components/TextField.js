@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
 TextField.propTypes = {
 	title: PropTypes.string.isRequired,
 	value: PropTypes.string,
-	icon: PropTypes.number,
-	iconBeforeText: PropTypes.number,
+	icon: PropTypes.string,
+	iconBeforeText: PropTypes.string,
 	style: PropTypes.any,
 };
 
