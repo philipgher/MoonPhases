@@ -16,7 +16,7 @@ const SettingsScreen = ({ navigation }) => {
 	const [staticLocationInputField, setStaticLocationInputField] = useState(staticLocation ? cityObjectToString(staticLocation) : null);
 	const [staticLocationHistList, setStaticLocationHintList] = useState([]);
 
-	const visibleHinstList = staticLocationHistList.length < 15 && staticLocationHistList.length > 0 ? staticLocationHistList : [];
+	const visibleHinstList = staticLocationHistList.length < 20 && staticLocationHistList.length > 0 ? staticLocationHistList : [];
 
 	const handleTouchMetric = () => {
 		setState((state) => ({
@@ -151,6 +151,7 @@ const SettingsScreen = ({ navigation }) => {
 									placeholderTextColor="rgba(255,255,255,0.3)"
 									style={styles.textInputLine}
 									value={staticLocationInputField}
+									onBlur={handleTapSubmit}
 									onChangeText={handleTypeInput}
 									onSubmitEditing={handleTapSubmit}
 								/>
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
 		top: 10,
 		paddingLeft: 20,
 		paddingRight: 20,
-		height: 500,
+		paddingBottom: 50,
 	},
 	header: { paddingTop: 20 },
 	radioLine: {
