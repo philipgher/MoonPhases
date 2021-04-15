@@ -12,7 +12,6 @@ import DateBar from '../components/DateBar';
 import Moon from '../components/Moon';
 import DataContainer from '../components/DataContainer';
 import AdBanner from '../components/AdBanner';
-import LocationPermissionDenied from '../components/LocationPermissionDenied';
 
 import getMoonPhase from '../utils/getMoonPhase';
 import getUserLocation from '../utils/getUserLocation';

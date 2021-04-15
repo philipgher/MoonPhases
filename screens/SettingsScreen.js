@@ -16,7 +16,9 @@ const SettingsScreen = ({ navigation }) => {
 	const [staticLocationInputField, setStaticLocationInputField] = useState(staticLocation ? cityObjectToString(staticLocation) : null);
 	const [staticLocationHistList, setStaticLocationHintList] = useState([]);
 
-	const visibleHinstList = staticLocationHistList.length < 20 && staticLocationHistList.length > 0 ? staticLocationHistList : [];
+	const visibleHinstList = staticLocationHistList.length < 20 && staticLocationHistList.length > 0
+		? staticLocationHistList
+		: [];
 
 	const handleTouchMetric = () => {
 		setState((state) => ({
@@ -40,8 +42,9 @@ const SettingsScreen = ({ navigation }) => {
 	};
 
 	const handleTypeInput = (inputText) => {
+		setStaticLocationInputField(inputText);
+
 		const cityOnly = inputText.split(',')[0];
-		setStaticLocationInputField(cityOnly);
 		const filteredCities = findCityOnInput(cityOnly);
 		setStaticLocationHintList(filteredCities);
 	};
@@ -58,17 +61,18 @@ const SettingsScreen = ({ navigation }) => {
 
 	const handleTapSubmit = () => {
 		if (visibleHinstList.length > 0) {
-			setStaticLocationInputField(cityObjectToString(visibleHinstList[0]));
-			setStaticLocationHintList([]);
-
-			setState((state) => ({
-				...state,
-				staticLocation: visibleHinstList[0],
-			}));
+			handleSelectCity(visibleHinstList[0]);
 
 			return;
 		}
 
+		setState((state) => ({
+			...state,
+			staticLocation: null,
+		}));
+	};
+
+	const handleFocusTextInput = () => {
 		setState((state) => ({
 			...state,
 			staticLocation: null,
@@ -151,8 +155,8 @@ const SettingsScreen = ({ navigation }) => {
 									placeholderTextColor="rgba(255,255,255,0.3)"
 									style={styles.textInputLine}
 									value={staticLocationInputField}
-									onBlur={handleTapSubmit}
 									onChangeText={handleTypeInput}
+									onFocus={handleFocusTextInput}
 									onSubmitEditing={handleTapSubmit}
 								/>
 								{visibleHinstList.length > 0 && (
