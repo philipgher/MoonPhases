@@ -1,50 +1,29 @@
 {
-	"expo": {
-		"name": "DailyMoon",
-		"slug": "DailyMoon",
-		"version": "1.0.3",
-		"orientation": "portrait",
-		"icon": "./assets/icon.png",
-		"splash": {
-			"image": "./assets/splash.png",
-			"resizeMode": "cover",
-			"backgroundColor": "#191D40"
-		},
-		"updates": {
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": [
-			"**/*"
-		],
-		"ios": {
-			"supportsTablet": false,
-			"config": {
-				"googleMobileAdsAppId": "ca-app-pub-7656011280489722~2473885792"
-			},
-			"infoPlist": {
-				"NSLocationWhenInUseUsageDescription": "This app uses requires your location only when opening the app. Used to determine the moon visibility and dates."
-			},
-			"buildNumber": "1.0.3",
-			"bundleIdentifier": "com.appstraat.dailymoon"
-		},
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
-				"backgroundColor": "#191D40"
-			},
-			"config": {
-				"googleMobileAdsAppId": "ca-app-pub-7656011280489722~4349788834"
-			},
-			"permissions": [
-				"ACCESS_COARSE_LOCATION",
-				"ACCESS_FINE_LOCATION",
-				"FOREGROUND_SERVICE"
-			],
-			"versionCode": 5,
-			"package": "com.appstraat.dailymoon"
-		},
-		"web": {
-			"favicon": "./assets/icon.png"
-		}
-	}
+  "expo": {
+    "name": "DailyMoon",
+    "slug": "DailyMoon",
+    "version": "1.0.4",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": { "image": "./assets/splash.png", "resizeMode": "cover", "backgroundColor": "#191D40" },
+    "updates": { "fallbackToCacheTimeout": 0 },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "config": { "googleMobileAdsAppId": "ca-app-pub-7656011280489722~2473885792" },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app uses requires your location only when opening the app. Used to determine the moon visibility and dates."
+      },
+      "buildNumber": "1.0.4",
+      "bundleIdentifier": "com.appstraat.dailymoon"
+    },
+    "android": {
+      "adaptiveIcon": { "foregroundImage": "./assets/adaptive-icon.png", "backgroundColor": "#191D40" },
+      "config": { "googleMobileAdsAppId": "ca-app-pub-7656011280489722~4349788834" },
+      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "FOREGROUND_SERVICE"],
+      "versionCode": 6,
+      "package": "com.appstraat.dailymoon"
+    },
+    "web": { "favicon": "./assets/icon.png" }
+  }
 }
