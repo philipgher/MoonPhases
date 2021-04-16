@@ -11,5 +11,7 @@ web-build/
 
 bin/*
 
+_secret/*.json
+
 # macOS
 .DS_Store
